@@ -33,6 +33,7 @@
             height: 100%;
             pointer-events: none;
             z-index: 0;
+            overflow: hidden;
         }
 
         .particle {
@@ -41,20 +42,65 @@
             height: 4px;
             background: rgba(99, 102, 241, 0.3);
             border-radius: 50%;
-            animation: float 15s infinite;
+            animation: float 15s infinite ease-in-out;
+            box-shadow: 0 0 6px rgba(99, 102, 241, 0.4);
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+            0%, 100% { transform: translateY(100vh) rotate(0deg) scale(0); opacity: 0; }
+            10% { opacity: 1; transform: translateY(90vh) rotate(90deg) scale(1); }
+            90% { opacity: 1; transform: translateY(10vh) rotate(630deg) scale(1); }
+            100% { transform: translateY(-100vh) rotate(720deg) scale(0); opacity: 0; }
+        }
+
+        /* Gradient orbs */
+        .gradient-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+            animation: pulse 8s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: #6366f1;
+            top: -100px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: #8b5cf6;
+            bottom: -50px;
+            left: -50px;
+            animation-delay: -4s;
+        }
+
+        .orb-3 {
+            width: 250px;
+            height: 250px;
+            background: #3b82f6;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -2s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.15; }
+            50% { transform: scale(1.1); opacity: 0.25; }
         }
 
         /* Header */
         .header {
             position: relative;
-            z-index: 1;
+            z-index: 10;
             padding: 16px 24px;
             display: flex;
             justify-content: space-between;
@@ -62,6 +108,7 @@
             background: rgba(15, 23, 42, 0.8);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
         .hamburger {
@@ -69,18 +116,26 @@
             flex-direction: column;
             cursor: pointer;
             gap: 4px;
+            padding: 8px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .hamburger:hover {
+            background: rgba(99, 102, 241, 0.1);
         }
 
         .hamburger span {
             width: 25px;
             height: 3px;
             background: #e2e8f0;
-            transition: 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border-radius: 2px;
         }
 
         .hamburger.active span:nth-child(1) {
             transform: rotate(-45deg) translate(-5px, 6px);
+            background: #6366f1;
         }
 
         .hamburger.active span:nth-child(2) {
@@ -89,12 +144,19 @@
 
         .hamburger.active span:nth-child(3) {
             transform: rotate(45deg) translate(-5px, -6px);
+            background: #6366f1;
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 12px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
         }
 
         .logo-icon {
@@ -106,6 +168,13 @@
             align-items: center;
             justify-content: center;
             font-size: 20px;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            transition: all 0.3s;
+        }
+
+        .logo:hover .logo-icon {
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+            transform: translateY(-2px);
         }
 
         .logo-text {
@@ -115,6 +184,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: -0.5px;
         }
 
         .header-nav {
@@ -127,11 +197,31 @@
             text-decoration: none;
             font-size: 0.875rem;
             font-weight: 500;
-            transition: color 0.3s;
+            transition: all 0.3s;
+            padding: 8px 12px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .header-nav a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            transition: all 0.3s;
+            transform: translateX(-50%);
         }
 
         .header-nav a:hover {
             color: #6366f1;
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .header-nav a:hover::before {
+            width: 80%;
         }
 
         /* Main Content */
@@ -147,16 +237,36 @@
         .hero {
             text-align: center;
             margin-bottom: 32px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero h1 {
             font-size: 2.25rem;
             font-weight: 800;
             margin-bottom: 12px;
-            background: linear-gradient(135deg, #f8fafc, #94a3b8);
+            background: linear-gradient(135deg, #f8fafc, #94a3b8, #6366f1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+            letter-spacing: -1px;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .hero p {
@@ -164,7 +274,7 @@
             color: #94a3b8;
             max-width: 500px;
             margin: 0 auto;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
         /* Calculator Card */
@@ -174,7 +284,20 @@
             border: 1px solid rgba(99, 102, 241, 0.1);
             border-radius: 24px;
             padding: 28px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                        0 0 0 1px rgba(99, 102, 241, 0.05);
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .card-header {
@@ -190,6 +313,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            color: #e2e8f0;
         }
 
         .card-title-icon {
@@ -200,6 +324,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1rem;
         }
 
         .semester-badge {
@@ -209,6 +334,13 @@
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 600;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+            transition: all 0.3s;
+        }
+
+        .semester-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
         }
 
         /* Courses List */
@@ -226,8 +358,8 @@
             border-radius: 12px;
             margin-bottom: 8px;
             border: 1px solid rgba(99, 102, 241, 0.05);
-            transition: all 0.3s;
-            animation: slideIn 0.3s ease-out;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: slideIn 0.4s ease-out;
         }
 
         @keyframes slideIn {
@@ -244,6 +376,8 @@
         .course-row:hover {
             background: rgba(51, 65, 85, 0.5);
             border-color: rgba(99, 102, 241, 0.2);
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .course-number {
@@ -251,6 +385,9 @@
             font-weight: 600;
             color: #6366f1;
             text-align: center;
+            padding: 4px 8px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 6px;
         }
 
         .course-input {
@@ -261,13 +398,18 @@
             color: #e2e8f0;
             font-size: 0.85rem;
             font-family: 'Inter', sans-serif;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .course-input:focus {
             outline: none;
             border-color: #6366f1;
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .course-input:hover {
+            border-color: rgba(99, 102, 241, 0.3);
         }
 
         .course-input::placeholder {
@@ -283,7 +425,7 @@
             font-size: 0.85rem;
             font-family: 'Inter', sans-serif;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236366f1' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
@@ -294,6 +436,12 @@
         .grade-select:focus {
             outline: none;
             border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .grade-select:hover {
+            border-color: rgba(99, 102, 241, 0.3);
         }
 
         .grade-badge {
@@ -307,12 +455,12 @@
             text-align: center;
         }
 
-        .grade-A { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
-        .grade-B { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
-        .grade-C { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
-        .grade-D { background: rgba(251, 146, 60, 0.2); color: #fb923c; }
-        .grade-E { background: rgba(239, 68, 68, 0.2); color: #f87171; }
-        .grade-F { background: rgba(239, 68, 68, 0.3); color: #ef4444; }
+        .grade-A { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
+        .grade-B { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+        .grade-C { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3); }
+        .grade-D { background: rgba(251, 146, 60, 0.2); color: #fb923c; border: 1px solid rgba(251, 146, 60, 0.3); }
+        .grade-E { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .grade-F { background: rgba(239, 68, 68, 0.3); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); }
 
         .remove-btn {
             background: none;
@@ -322,7 +470,7 @@
             font-size: 1.25rem;
             padding: 4px;
             border-radius: 6px;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -331,6 +479,11 @@
         .remove-btn:hover {
             color: #ef4444;
             background: rgba(239, 68, 68, 0.1);
+            transform: scale(1.1);
+        }
+
+        .remove-btn:active {
+            transform: scale(0.95);
         }
 
         /* Table Header */
@@ -360,12 +513,32 @@
             font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
             font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:active::before {
+            width: 300px;
+            height: 300px;
         }
 
         .btn-add {
@@ -379,6 +552,11 @@
             background: rgba(99, 102, 241, 0.2);
             border-color: rgba(99, 102, 241, 0.3);
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+        }
+
+        .btn-add:active {
+            transform: translateY(0);
         }
 
         .btn-calculate {
@@ -393,6 +571,10 @@
             box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
         }
 
+        .btn-calculate:active {
+            transform: translateY(0);
+        }
+
         .btn-reset {
             background: rgba(239, 68, 68, 0.1);
             color: #f87171;
@@ -402,6 +584,12 @@
 
         .btn-reset:hover {
             background: rgba(239, 68, 68, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+        }
+
+        .btn-reset:active {
+            transform: translateY(0);
         }
 
         /* Results Section */
@@ -426,6 +614,7 @@
             border-radius: 20px;
             padding: 28px;
             text-align: center;
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.1);
         }
 
         .cgpa-display {
@@ -437,6 +626,8 @@
             font-weight: 500;
             color: #94a3b8;
             margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .cgpa-value {
@@ -447,6 +638,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             line-height: 1;
+            text-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
         }
 
         .cgpa-class {
@@ -458,14 +650,15 @@
             font-size: 0.85rem;
             font-weight: 600;
             margin-top: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .class-first { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
-        .class-second-upper { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
-        .class-second-lower { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
-        .class-third { background: rgba(251, 146, 60, 0.2); color: #fb923c; }
-        .class-pass { background: rgba(239, 68, 68, 0.2); color: #f87171; }
-        .class-fail { background: rgba(239, 68, 68, 0.3); color: #ef4444; }
+        .class-first { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
+        .class-second-upper { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+        .class-second-lower { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3); }
+        .class-third { background: rgba(251, 146, 60, 0.2); color: #fb923c; border: 1px solid rgba(251, 146, 60, 0.3); }
+        .class-pass { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .class-fail { background: rgba(239, 68, 68, 0.3); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); }
 
         .stats-grid {
             display: grid;
@@ -478,6 +671,15 @@
 
         .stat-item {
             text-align: center;
+            padding: 12px;
+            background: rgba(15, 23, 42, 0.3);
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .stat-item:hover {
+            background: rgba(15, 23, 42, 0.5);
+            transform: translateY(-2px);
         }
 
         .stat-value {
@@ -490,6 +692,8 @@
             font-size: 0.7rem;
             color: #64748b;
             margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         /* Grading Scale Info */
@@ -499,6 +703,7 @@
             border: 1px solid rgba(99, 102, 241, 0.1);
             border-radius: 16px;
             padding: 20px;
+            animation: fadeIn 0.8s ease-out 0.4s backwards;
         }
 
         .grading-info h3 {
@@ -508,6 +713,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            color: #e2e8f0;
         }
 
         .grading-table {
@@ -523,6 +729,14 @@
             padding: 10px 12px;
             background: rgba(51, 65, 85, 0.3);
             border-radius: 8px;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .grading-item:hover {
+            background: rgba(51, 65, 85, 0.5);
+            border-color: rgba(99, 102, 241, 0.2);
+            transform: translateY(-2px);
         }
 
         .grading-grade {
@@ -557,12 +771,15 @@
         .footer-links a {
             color: #64748b;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: all 0.3s;
             font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 6px;
         }
 
         .footer-links a:hover {
             color: #6366f1;
+            background: rgba(99, 102, 241, 0.1);
         }
 
         .footer-copyright {
@@ -578,10 +795,12 @@
         .footer-credit a {
             color: #6366f1;
             text-decoration: none;
+            transition: all 0.3s;
         }
 
         .footer-credit a:hover {
             text-decoration: underline;
+            color: #8b5cf6;
         }
 
         /* Social Media Icons */
@@ -604,14 +823,20 @@
             color: #94a3b8;
             text-decoration: none;
             font-size: 1.2rem;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .social-icon:hover {
             background: rgba(99, 102, 241, 0.2);
             border-color: rgba(99, 102, 241, 0.4);
             color: #6366f1;
-            transform: translateY(-2px);
+            transform: translateY(-4px) scale(1.1);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .social-icon:active {
+            transform: translateY(-2px) scale(1.05);
         }
 
         /* Responsive */
@@ -814,6 +1039,11 @@
     <!-- Animated Background Particles -->
     <div class="bg-particles" id="particles"></div>
 
+    <!-- Gradient Orbs -->
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+
     <!-- Header -->
     <header class="header">
         <div class="logo">
@@ -984,6 +1214,8 @@
                 addCourse();
             }
             createParticles();
+            initSmoothScroll();
+            initInputAnimations();
         });
 
         function addCourse() {
@@ -1012,6 +1244,17 @@
             container.appendChild(row);
             updateCourseNumbers();
             updateCourseCount();
+
+            // Add focus animation to new inputs
+            const inputs = row.querySelectorAll('.course-input, .grade-select');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'translateX(8px)';
+                });
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = '';
+                });
+            });
         }
 
         function removeCourse(btn) {
@@ -1020,7 +1263,7 @@
 
             // Don't remove if it's the last row
             if (container.children.length <= 1) {
-                alert('You must have at least one course.');
+                showNotification('You must have at least one course.', 'warning');
                 return;
             }
 
@@ -1047,8 +1290,10 @@
         function updateGradeBadge(select) {
             // Visual feedback for grade selection
             select.style.borderColor = '#6366f1';
+            select.style.boxShadow = '0 0 0 3px rgba(99, 102, 241, 0.2)';
             setTimeout(() => {
                 select.style.borderColor = '';
+                select.style.boxShadow = '';
             }, 500);
         }
 
@@ -1063,6 +1308,7 @@
                 document.querySelectorAll('.grade-select').forEach(select => {
                     select.value = 'A';
                 });
+                showNotification('Form has been reset.', 'success');
             }
         }
 
@@ -1075,6 +1321,7 @@
                 particle.style.left = Math.random() * 100 + '%';
                 particle.style.animationDelay = Math.random() * 15 + 's';
                 particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+                particle.style.opacity = Math.random() * 0.5 + 0.2;
                 container.appendChild(particle);
             }
         }
@@ -1122,15 +1369,121 @@
                 if (input.value && (input.value < 1 || input.value > 6)) {
                     hasError = true;
                     input.style.borderColor = '#ef4444';
+                    input.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.1)';
                 } else {
                     input.style.borderColor = '';
+                    input.style.boxShadow = '';
                 }
             });
 
             if (hasError) {
                 e.preventDefault();
-                alert('Please enter valid credit units (1-6) for all courses.');
+                showNotification('Please enter valid credit units (1-6) for all courses.', 'error');
             }
+        });
+
+        // Smooth scroll for anchor links
+        function initSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Input focus animations
+        function initInputAnimations() {
+            document.querySelectorAll('.course-input, .grade-select').forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'translateX(8px)';
+                });
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = '';
+                });
+            });
+        }
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+
+            const colors = {
+                success: 'rgba(34, 197, 94, 0.9)',
+                error: 'rgba(239, 68, 68, 0.9)',
+                warning: 'rgba(251, 191, 36, 0.9)',
+                info: 'rgba(59, 130, 246, 0.9)'
+            };
+
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${colors[type]};
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                z-index: 10000;
+                animation: slideInRight 0.3s ease-out;
+                font-size: 0.9rem;
+                font-weight: 500;
+            `;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease-in forwards';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // Add notification animations
+        const notificationStyle = document.createElement('style');
+        notificationStyle.textContent = `
+            @keyframes slideInRight {
+                from {
+                    opacity: 0;
+                    transform: translateX(100px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+            }
+            }
+            @keyframes slideOutRight {
+                from {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateX(100px);
+                }
+            }
+        `;
+        document.head.appendChild(notificationStyle);
+
+        // Add parallax effect to gradient orbs
+        document.addEventListener('mousemove', function(e) {
+            const orbs = document.querySelectorAll('.gradient-orb');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+
+            orbs.forEach((orb, index) => {
+                const speed = (index + 1) * 20;
+                orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+            });
         });
     </script>
 </body>
