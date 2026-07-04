@@ -9,6 +9,9 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
+    <!-- html2pdf.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
     <style>
         * {
             margin: 0;
@@ -1930,6 +1933,156 @@
             }
         }
 
+        /* PDF Button Styling */
+        .btn-download-pdf {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            flex: 1;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-download-pdf:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+        }
+
+        /* PDF Generation Styles */
+        .pdf-content {
+            background: white;
+            color: #1e293b;
+            padding: 40px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .pdf-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #14b8a6;
+        }
+
+        .pdf-header h1 {
+            color: #0f766e;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .pdf-header p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .pdf-cgpa-display {
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.1), rgba(16, 185, 129, 0.1));
+            border: 2px solid rgba(20, 184, 166, 0.2);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .pdf-cgpa-value {
+            font-size: 48px;
+            font-weight: 800;
+            color: #14b8a6;
+            line-height: 1;
+        }
+
+        .pdf-class-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+
+        .pdf-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .pdf-stat-item {
+            text-align: center;
+            padding: 16px;
+            background: rgba(241, 245, 249, 0.8);
+            border-radius: 8px;
+            border: 1px solid rgba(20, 184, 166, 0.1);
+        }
+
+        .pdf-stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0f766e;
+        }
+
+        .pdf-stat-label {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .pdf-grades-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            background: white;
+        }
+
+        .pdf-grades-table thead {
+            background: rgba(20, 184, 166, 0.1);
+        }
+
+        .pdf-grades-table th {
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: #0f766e;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid #14b8a6;
+        }
+
+        .pdf-grades-table td {
+            padding: 12px 16px;
+            font-size: 14px;
+            color: #1e293b;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .pdf-grades-table tbody tr:nth-child(even) {
+            background: rgba(241, 245, 249, 0.5);
+        }
+
+        .pdf-grade-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .pdf-grade-A { background: rgba(34, 197, 94, 0.2); color: #16a34a; border: 1px solid rgba(34, 197, 94, 0.3); }
+        .pdf-grade-B { background: rgba(59, 130, 246, 0.2); color: #2563eb; border: 1px solid rgba(59, 130, 246, 0.3); }
+        .pdf-grade-C { background: rgba(251, 191, 36, 0.2); color: #ca8a04; border: 1px solid rgba(251, 191, 36, 0.3); }
+        .pdf-grade-D { background: rgba(251, 146, 60, 0.2); color: #ea580c; border: 1px solid rgba(251, 146, 60, 0.3); }
+        .pdf-grade-E { background: rgba(239, 68, 68, 0.2); color: #dc2626; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .pdf-grade-F { background: rgba(239, 68, 68, 0.3); color: #b91c1c; border: 1px solid rgba(239, 68, 68, 0.4); }
+
+        .pdf-footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+            font-size: 12px;
+            color: #64748b;
+        }
+
         /* Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
@@ -2098,12 +2251,15 @@
                         </div>
                     </div>
 
-                    <div style="margin-top: 20px; display: flex; gap: 10px;">
-                        <button class="btn btn-calculate" onclick="showAnalytics()" style="flex: 1;">
+                    <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn btn-calculate" onclick="showAnalytics()" style="flex: 1; min-width: 150px;">
                             <span>📊</span> View Grade Analytics
                         </button>
-                        <button class="btn btn-calculate" onclick="showGradesView()" style="flex: 1;">
+                        <button class="btn btn-calculate" onclick="showGradesView()" style="flex: 1; min-width: 150px;">
                             <span>📋</span> View Your Grades
+                        </button>
+                        <button class="btn btn-calculate" onclick="downloadPDF()" style="flex: 1; min-width: 150px;">
+                            <span>📄</span> Download PDF
                         </button>
                     </div>
                 </div>
@@ -2139,9 +2295,14 @@
         <div class="grades-view-section" id="gradesViewSection">
             <div class="grades-view-header">
                 <h3>📋 Your Grades Summary</h3>
-                <button class="btn btn-reset" onclick="toggleGradesView()" style="padding: 6px 12px; font-size: 0.75rem;">
-                    <span>✕</span> Close
-                </button>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-calculate" onclick="downloadGradesPDF()" style="padding: 6px 12px; font-size: 0.75rem;">
+                        <span>📄</span> Download PDF
+                    </button>
+                    <button class="btn btn-reset" onclick="toggleGradesView()" style="padding: 6px 12px; font-size: 0.75rem;">
+                        <span>✕</span> Close
+                    </button>
+                </div>
             </div>
             <div class="grades-table-container">
                 <table class="grades-table" id="gradesTable">
@@ -2231,7 +2392,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="social-media">
-            <a href="https://wa.me/08073866899" target="_blank" class="social-icon" title="WhatsApp">💬</a>
+            <a href="https://wa.me/2348073866899" target="_blank" class="social-icon" title="WhatsApp">💬</a>
             <a href="https://www.linkedin.com/in/studywell" target="_blank" class="social-icon" title="LinkedIn">💼</a>
             <a href="https://x.com/WETech33" target="_blank" class="social-icon" title="X (Twitter)">🐦</a>
         </div>
@@ -3093,6 +3254,303 @@
                 showAnalytics();
             }
         });
+
+        // PDF Download Function
+        function downloadGradesPDF() {
+            // Get current data
+            const courseNames = document.querySelectorAll('input[name="courses[]"]');
+            const units = document.querySelectorAll('input[name="units[]"]');
+            const grades = document.querySelectorAll('select[name="grades[]"]');
+
+            let gradesTableHTML = '';
+            let totalUnits = 0;
+            let totalPoints = 0;
+            let passingCourses = 0;
+            let failingCourses = 0;
+            let validCourses = 0;
+
+            for (let i = 0; i < grades.length; i++) {
+                const courseName = courseNames[i].value.trim() || `Course ${i + 1}`;
+                const unitValue = parseFloat(units[i].value);
+                const gradeValue = grades[i].value;
+                const points = gradePoints[gradeValue];
+
+                if (!isNaN(unitValue) && unitValue > 0) {
+                    const coursePoints = unitValue * points;
+                    const isPassing = gradeValue !== 'F' && gradeValue !== 'E';
+
+                    totalUnits += unitValue;
+                    totalPoints += coursePoints;
+                    validCourses++;
+
+                    if (isPassing) {
+                        passingCourses++;
+                    } else {
+                        failingCourses++;
+                    }
+
+                    gradesTableHTML += `
+                        <tr>
+                            <td>${validCourses}</td>
+                            <td>${courseName}</td>
+                            <td>${unitValue}</td>
+                            <td><span class="pdf-grade-badge pdf-grade-${gradeValue}">${gradeValue}</span></td>
+                            <td>${coursePoints.toFixed(1)}</td>
+                            <td>${isPassing ? '✓ Pass' : '✗ Fail'}</td>
+                        </tr>
+                    `;
+                }
+            }
+
+            if (validCourses === 0) {
+                showNotification('No valid courses to include in PDF', 'warning');
+                return;
+            }
+
+            const averageCgpa = totalUnits > 0 ? (totalPoints / totalUnits).toFixed(2) : '0.00';
+            const passingRate = validCourses > 0 ? ((passingCourses / validCourses) * 100).toFixed(1) : '0.0';
+
+            // Create PDF HTML structure
+            const pdfHTML = `
+                <div class="pdf-content">
+                    <div class="pdf-header">
+                        <h1>📋 Detailed Grades Report</h1>
+                        <p>Generated on ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    </div>
+
+                    <div class="pdf-cgpa-display">
+                        <div style="font-size: 14px; color: #64748b; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;">Summary Statistics</div>
+
+                        <div class="pdf-stats-grid" style="grid-template-columns: repeat(4, 1fr);">
+                            <div class="pdf-stat-item">
+                                <div class="pdf-stat-value">${validCourses}</div>
+                                <div class="pdf-stat-label">Total Courses</div>
+                            </div>
+                            <div class="pdf-stat-item">
+                                <div class="pdf-stat-value">${totalUnits}</div>
+                                <div class="pdf-stat-label">Total Units</div>
+                            </div>
+                            <div class="pdf-stat-item">
+                                <div class="pdf-stat-value">${averageCgpa}</div>
+                                <div class="pdf-stat-label">CGPA</div>
+                            </div>
+                            <div class="pdf-stat-item">
+                                <div class="pdf-stat-value">${passingRate}%</div>
+                                <div class="pdf-stat-label">Passing Rate</div>
+                            </div>
+                        </div>
+
+                        <div class="pdf-stats-grid" style="grid-template-columns: repeat(3, 1fr); margin-top: 16px;">
+                            <div class="pdf-stat-item">
+                                <div class="pdf-stat-value" style="color: #16a34a;">${passingCourses}</div>
+                                <div class="pdf-stat-label">Passed</div>
+                            </div>
+                            <div class="pdf-stat-item">
+                                <div class="pdf-stat-value" style="color: ${failingCourses > 0 ? '#dc2626' : '#16a34a'};">${failingCourses}</div>
+                                <div class="pdf-stat-label">Failed</div>
+                            </div>
+                            <div class="pdf-stat-item">
+                                <div class="pdf-stat-value">${totalPoints.toFixed(1)}</div>
+                                <div class="pdf-stat-label">Total Points</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 style="color: #0f766e; margin-bottom: 16px; font-size: 18px;">📋 Detailed Course Breakdown</h3>
+                    <table class="pdf-grades-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Course Name</th>
+                                <th>Units</th>
+                                <th>Grade</th>
+                                <th>Points</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${gradesTableHTML}
+                        </tbody>
+                    </table>
+
+                    <div class="pdf-footer">
+                        <p>© ${new Date().getFullYear()} University CGPA Calculator. Built with care for students.</p>
+                        <p>Generated by <strong>Akingbehin Abideen (WETech)</strong></p>
+                        <p style="margin-top: 8px;">📞 WhatsApp: <strong>08073866899</strong></p>
+                    </div>
+                </div>
+            `;
+
+            // Configure PDF options
+            const opt = {
+                margin:       [10, 10, 10, 10],
+                filename:     `Detailed_Grades_Report_${new Date().toISOString().split('T')[0]}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Show loading notification
+            showNotification('Generating detailed grades PDF...', 'info');
+
+            // Create a temporary container for PDF content
+            const tempContainer = document.createElement('div');
+            tempContainer.style.position = 'absolute';
+            tempContainer.style.left = '-9999px';
+            tempContainer.style.top = '0';
+            tempContainer.innerHTML = pdfHTML;
+            document.body.appendChild(tempContainer);
+
+            // Generate and download PDF
+            html2pdf().set(opt).from(tempContainer).save().then(() => {
+                // Clean up
+                document.body.removeChild(tempContainer);
+                showNotification('Detailed grades PDF downloaded successfully!', 'success');
+            }).catch((error) => {
+                // Clean up on error
+                document.body.removeChild(tempContainer);
+                console.error('PDF generation error:', error);
+                showNotification('Error generating PDF. Please try again.', 'error');
+            });
+        }
+
+        // PDF Download Function
+        function downloadPDF() {
+            // Check if there are calculated results
+            const resultsSection = document.querySelector('.results-section');
+            if (!resultsSection || !resultsSection.classList.contains('show')) {
+                showNotification('Please calculate your CGPA first before downloading PDF', 'warning');
+                return;
+            }
+
+            // Get current data
+            const courseNames = document.querySelectorAll('input[name="courses[]"]');
+            const units = document.querySelectorAll('input[name="units[]"]');
+            const grades = document.querySelectorAll('select[name="grades[]"]');
+
+            // Get CGPA and class from the results section
+            const cgpaValue = document.querySelector('.cgpa-value')?.textContent || '0.00';
+            const classText = document.querySelector('.cgpa-class')?.textContent || '';
+            const totalUnits = document.querySelectorAll('.stat-value')[0]?.textContent || '0';
+            const totalPoints = document.querySelectorAll('.stat-value')[1]?.textContent || '0';
+            const courseCount = document.querySelectorAll('.stat-value')[2]?.textContent || '0';
+
+            // Generate PDF content
+            let gradesTableHTML = '';
+            let validCourses = 0;
+
+            for (let i = 0; i < grades.length; i++) {
+                const courseName = courseNames[i].value.trim() || `Course ${i + 1}`;
+                const unitValue = parseFloat(units[i].value);
+                const gradeValue = grades[i].value;
+                const points = gradePoints[gradeValue];
+
+                if (!isNaN(unitValue) && unitValue > 0) {
+                    const coursePoints = unitValue * points;
+                    validCourses++;
+
+                    gradesTableHTML += `
+                        <tr>
+                            <td>${validCourses}</td>
+                            <td>${courseName}</td>
+                            <td>${unitValue}</td>
+                            <td><span class="pdf-grade-badge pdf-grade-${gradeValue}">${gradeValue}</span></td>
+                            <td>${coursePoints.toFixed(1)}</td>
+                        </tr>
+                    `;
+                }
+            }
+
+            if (validCourses === 0) {
+                showNotification('No valid courses to include in PDF', 'warning');
+                return;
+            }
+
+            // Create PDF HTML structure
+            const pdfHTML = `
+                <div class="pdf-content">
+                    <div class="pdf-header">
+                        <h1>📊 CGPA Calculator Report</h1>
+                        <p>Generated on ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    </div>
+
+                    <div class="pdf-cgpa-display">
+                        <div style="font-size: 14px; color: #64748b; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;">Your Cumulative GPA</div>
+                        <div class="pdf-cgpa-value">${cgpaValue}</div>
+                        <div class="pdf-class-badge" style="background: rgba(20, 184, 166, 0.1); color: #0f766e; border: 1px solid rgba(20, 184, 166, 0.2);">${classText}</div>
+
+                        <div class="pdf-stats-grid">
+                            <div class="pdf-stat-item">
+                                <div class="pdf-stat-value">${totalUnits}</div>
+                                <div class="pdf-stat-label">Total Units</div>
+                            </div>
+                            <div class="pdf-stat-item">
+                                <div class="pdf-stat-value">${totalPoints}</div>
+                                <div class="pdf-stat-label">Total Points</div>
+                            </div>
+                            <div class="pdf-stat-item">
+                                <div class="pdf-stat-value">${courseCount}</div>
+                                <div class="pdf-stat-label">Courses</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 style="color: #0f766e; margin-bottom: 16px; font-size: 18px;">📋 Course Details</h3>
+                    <table class="pdf-grades-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Course Name</th>
+                                <th>Units</th>
+                                <th>Grade</th>
+                                <th>Points</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${gradesTableHTML}
+                        </tbody>
+                    </table>
+
+                    <div class="pdf-footer">
+                        <p>© ${new Date().getFullYear()} University CGPA Calculator. Built with care for students.</p>
+                        <p>Generated by <strong>Akingbehin Abideen (WETech)</strong></p>
+                        <p style="margin-top: 8px;">📞 WhatsApp: <strong>08073866899</strong></p>
+                    </div>
+                </div>
+            `;
+
+            // Configure PDF options
+            const opt = {
+                margin:       [10, 10, 10, 10],
+                filename:     `CGPA_Report_${new Date().toISOString().split('T')[0]}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Show loading notification
+            showNotification('Generating PDF...', 'info');
+
+            // Create a temporary container for PDF content
+            const tempContainer = document.createElement('div');
+            tempContainer.style.position = 'absolute';
+            tempContainer.style.left = '-9999px';
+            tempContainer.style.top = '0';
+            tempContainer.innerHTML = pdfHTML;
+            document.body.appendChild(tempContainer);
+
+            // Generate and download PDF
+            html2pdf().set(opt).from(tempContainer).save().then(() => {
+                // Clean up
+                document.body.removeChild(tempContainer);
+                showNotification('PDF downloaded successfully!', 'success');
+            }).catch((error) => {
+                // Clean up on error
+                document.body.removeChild(tempContainer);
+                console.error('PDF generation error:', error);
+                showNotification('Error generating PDF. Please try again.', 'error');
+            });
+        }
     </script>
 </body>
 </html>
