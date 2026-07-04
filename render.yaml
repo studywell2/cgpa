@@ -1,10 +1,8 @@
 services:
   - type: web
     name: gcpa-calculator
-    runtime: php
+    runtime: docker
     plan: free
-    buildCommand: composer install --no-dev && npm run build
-    startCommand: php artisan serve --host=0.0.0.0 --port=$PORT
     envVars:
       - key: APP_NAME
         value: GCPA Calculator
