@@ -110,6 +110,113 @@
             color: #14b8a6;
         }
 
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 8px;
+            background: rgba(51, 65, 85, 0.3);
+            border-radius: 8px;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            transition: all 0.3s;
+        }
+
+        .hamburger:hover {
+            background: rgba(51, 65, 85, 0.5);
+            border-color: rgba(20, 184, 166, 0.3);
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: #94a3b8;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid rgba(20, 184, 166, 0.2);
+            padding: 80px 24px 24px;
+            z-index: 1000;
+            transition: right 0.3s ease-in-out;
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+        }
+
+        .mobile-menu a {
+            display: block;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 14px 16px;
+            margin-bottom: 8px;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .mobile-menu a:hover,
+        .mobile-menu a.active {
+            background: rgba(20, 184, 166, 0.1);
+            color: #14b8a6;
+        }
+
+        .mobile-menu-header {
+            position: absolute;
+            top: 16px;
+            left: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .mobile-menu-header .logo-text {
+            font-size: 1.1rem;
+        }
+
         /* Main Content */
         .main-content {
             position: relative;
@@ -482,8 +589,19 @@
             }
 
             .header-nav {
-                gap: 12px;
-                font-size: 0.8rem;
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .mobile-menu-overlay {
+                display: block;
             }
 
             .main-content {
@@ -616,7 +734,26 @@
             <a href="/about">About</a>
             <a href="/help" class="active">Help</a>
         </nav>
+        <div class="hamburger" onclick="toggleMobileMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-header">
+            <div class="logo-icon">📊</div>
+            <span class="logo-text">CGPA Calculator</span>
+        </div>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/help" class="active">Help</a>
+    </div>
 
     <!-- Main Content -->
     <main class="main-content">
@@ -870,6 +1007,24 @@
             // Toggle current item
             if (!isActive) {
                 faqItem.classList.add('active');
+            }
+        }
+
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const overlay = document.querySelector('.mobile-menu-overlay');
+
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+
+            // Prevent body scroll when menu is open
+            if (mobileMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
             }
         }
 

@@ -1425,6 +1425,156 @@
             border-radius: 50%;
         }
 
+        /* Grades View Section */
+        .grades-view-section {
+            margin-top: 32px;
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(20, 184, 166, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            animation: fadeIn 0.8s ease-out 0.6s backwards;
+            display: none;
+        }
+
+        body.light-mode .grades-view-section {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(20, 184, 166, 0.2);
+        }
+
+        .grades-view-section.show {
+            display: block;
+        }
+
+        .grades-view-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .grades-view-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #e2e8f0;
+        }
+
+        body.light-mode .grades-view-header h3 {
+            color: #1e293b;
+        }
+
+        .grades-table-container {
+            background: rgba(51, 65, 85, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(20, 184, 166, 0.1);
+        }
+
+        body.light-mode .grades-table-container {
+            background: rgba(241, 245, 249, 0.5);
+        }
+
+        .grades-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .grades-table thead {
+            background: rgba(20, 184, 166, 0.1);
+        }
+
+        .grades-table th {
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid rgba(20, 184, 166, 0.2);
+        }
+
+        .grades-table td {
+            padding: 12px 16px;
+            font-size: 0.85rem;
+            color: #e2e8f0;
+            border-bottom: 1px solid rgba(20, 184, 166, 0.1);
+        }
+
+        body.light-mode .grades-table td {
+            color: #1e293b;
+        }
+
+        .grades-table tbody tr:hover {
+            background: rgba(20, 184, 166, 0.05);
+        }
+
+        .grades-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .grade-status-pass {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .grade-status-fail {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .grades-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(20, 184, 166, 0.1);
+        }
+
+        .summary-item {
+            text-align: center;
+            padding: 12px;
+            background: rgba(15, 23, 42, 0.3);
+            border-radius: 8px;
+        }
+
+        body.light-mode .summary-item {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .summary-label {
+            font-size: 0.7rem;
+            color: #64748b;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .summary-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #14b8a6;
+        }
+
         /* Target Calculator Section */
         .target-calculator {
             margin-top: 32px;
@@ -1948,9 +2098,12 @@
                         </div>
                     </div>
 
-                    <div style="margin-top: 20px;">
-                        <button class="btn btn-calculate" onclick="showAnalytics()" style="width: 100%;">
+                    <div style="margin-top: 20px; display: flex; gap: 10px;">
+                        <button class="btn btn-calculate" onclick="showAnalytics()" style="flex: 1;">
                             <span>📊</span> View Grade Analytics
+                        </button>
+                        <button class="btn btn-calculate" onclick="showGradesView()" style="flex: 1;">
+                            <span>📋</span> View Your Grades
                         </button>
                     </div>
                 </div>
@@ -1978,6 +2131,35 @@
                     <div id="gradeStatistics" style="text-align: center; padding: 20px;">
                         <!-- Statistics will be generated by JavaScript -->
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grades View Section -->
+        <div class="grades-view-section" id="gradesViewSection">
+            <div class="grades-view-header">
+                <h3>📋 Your Grades Summary</h3>
+                <button class="btn btn-reset" onclick="toggleGradesView()" style="padding: 6px 12px; font-size: 0.75rem;">
+                    <span>✕</span> Close
+                </button>
+            </div>
+            <div class="grades-table-container">
+                <table class="grades-table" id="gradesTable">
+                    <thead>
+                        <tr>
+                            <th>Course</th>
+                            <th>Units</th>
+                            <th>Grade</th>
+                            <th>Points</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gradesTableBody">
+                        <!-- Grades will be populated by JavaScript -->
+                    </tbody>
+                </table>
+                <div class="grades-summary" id="gradesSummary">
+                    <!-- Summary will be populated by JavaScript -->
                 </div>
             </div>
         </div>
@@ -2598,6 +2780,109 @@
                 orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
             });
         });
+
+        // Grades View Functions
+        function toggleGradesView() {
+            const gradesViewSection = document.getElementById('gradesViewSection');
+            gradesViewSection.classList.toggle('show');
+        }
+
+        function showGradesView() {
+            updateGradesView();
+            document.getElementById('gradesViewSection').classList.add('show');
+        }
+
+        function updateGradesView() {
+            const courseNames = document.querySelectorAll('input[name="courses[]"]');
+            const units = document.querySelectorAll('input[name="units[]"]');
+            const grades = document.querySelectorAll('select[name="grades[]"]');
+
+            const tableBody = document.getElementById('gradesTableBody');
+            const summaryContainer = document.getElementById('gradesSummary');
+
+            let html = '';
+            let totalUnits = 0;
+            let totalPoints = 0;
+            let passingCourses = 0;
+            let failingCourses = 0;
+            let validCourses = 0;
+
+            for (let i = 0; i < grades.length; i++) {
+                const courseName = courseNames[i].value.trim() || `Course ${i + 1}`;
+                const unitValue = parseFloat(units[i].value);
+                const gradeValue = grades[i].value;
+                const points = gradePoints[gradeValue];
+
+                if (!isNaN(unitValue) && unitValue > 0) {
+                    const coursePoints = unitValue * points;
+                    const isPassing = gradeValue !== 'F' && gradeValue !== 'E';
+
+                    totalUnits += unitValue;
+                    totalPoints += coursePoints;
+                    validCourses++;
+
+                    if (isPassing) {
+                        passingCourses++;
+                    } else {
+                        failingCourses++;
+                    }
+
+                    html += `
+                        <tr>
+                            <td>${courseName}</td>
+                            <td>${unitValue}</td>
+                            <td>
+                                <span class="grade-badge grade-${gradeValue}">${gradeValue}</span>
+                            </td>
+                            <td>${coursePoints.toFixed(1)}</td>
+                            <td>
+                                ${isPassing ?
+                                    '<span class="grade-status-pass">✓ Pass</span>' :
+                                    '<span class="grade-status-fail">✗ Fail</span>'
+                                }
+                            </td>
+                        </tr>
+                    `;
+                }
+            }
+
+            tableBody.innerHTML = html;
+
+            // Calculate summary statistics
+            const averageCgpa = totalUnits > 0 ? (totalPoints / totalUnits).toFixed(2) : '0.00';
+            const passingRate = validCourses > 0 ? ((passingCourses / validCourses) * 100).toFixed(1) : '0.0';
+
+            summaryContainer.innerHTML = `
+                <div class="summary-item">
+                    <div class="summary-label">Total Courses</div>
+                    <div class="summary-value">${validCourses}</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Total Units</div>
+                    <div class="summary-value">${totalUnits}</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Total Points</div>
+                    <div class="summary-value">${totalPoints.toFixed(1)}</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">CGPA</div>
+                    <div class="summary-value">${averageCgpa}</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Passing Rate</div>
+                    <div class="summary-value" style="color: ${passingRate >= 70 ? '#22c55e' : passingRate >= 50 ? '#fbbf24' : '#ef4444'}">${passingRate}%</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Passed</div>
+                    <div class="summary-value" style="color: #22c55e;">${passingCourses}</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Failed</div>
+                    <div class="summary-value" style="color: ${failingCourses > 0 ? '#ef4444' : '#22c55e'}">${failingCourses}</div>
+                </div>
+            `;
+        }
 
         // Analytics Functions
         function toggleAnalytics() {
