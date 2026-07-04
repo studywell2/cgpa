@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     libzip-dev \
+    libsqlite3-dev \
     nodejs \
     npm \
     && apt-get clean \
