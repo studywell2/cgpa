@@ -34,6 +34,18 @@ RUN composer install --no-dev --optimize-autoloader
 # Install and build frontend assets
 RUN npm install && npm run build
 
+# Create .env from .env.example if it doesn't exist
+RUN if [ ! -f .env ]; then cp .env.example .env; fi
+
+# Generate application key
+RUN php artisan key:generate
+
+# Create SQLite database and run migrations
+RUN touch database/database.sqlite && php artisan migrate --force
+
+# Clear and cache config
+RUN php artisan config:clear && php artisan config:cache && php artisan route:cache
+
 # Create storage directories and set permissions
 RUN mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs bootstrap/cache \
     && chown -R www-data:www-data /var/www/html \
