@@ -34,6 +34,13 @@ RUN composer install --no-dev --optimize-autoloader
 # Install and build frontend assets
 RUN npm install && npm run build
 
+# Create storage directories first
+RUN mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs bootstrap/cache
+
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+
 # Create .env from .env.example if it doesn't exist
 RUN if [ ! -f .env ]; then cp .env.example .env; fi
 
@@ -45,11 +52,6 @@ RUN touch database/database.sqlite && php artisan migrate --force
 
 # Clear and cache config
 RUN php artisan config:clear && php artisan config:cache && php artisan route:cache
-
-# Create storage directories and set permissions
-RUN mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs bootstrap/cache \
-    && chown -R www-data:www-data /var/www/html \
-    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Expose port
 EXPOSE 80
