@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: gcpa-calculator
+    runtime: php
+    plan: free
+    buildCommand: composer install --no-dev && npm run build
+    startCommand: php artisan serve --host=0.0.0.0 --port=$PORT
+    envVars:
+      - key: APP_NAME
+        value: GCPA Calculator
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_URL
+        value: https://gcpa-calculator.onrender.com
+      - key: LOG_CHANNEL
+        value: errorlog
+      - key: LOG_LEVEL
+        value: debug

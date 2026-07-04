@@ -17,7 +17,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #134e4a 50%, #0f172a 100%);
             min-height: 100vh;
             color: #e2e8f0;
             position: relative;
@@ -39,9 +39,10 @@
             position: absolute;
             width: 4px;
             height: 4px;
-            background: rgba(99, 102, 241, 0.3);
+            background: rgba(20, 184, 166, 0.3);
             border-radius: 50%;
             animation: float 15s infinite;
+            box-shadow: 0 0 6px rgba(20, 184, 166, 0.4);
         }
 
         @keyframes float {
@@ -61,7 +62,7 @@
             align-items: center;
             background: rgba(15, 23, 42, 0.8);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+            border-bottom: 1px solid rgba(20, 184, 166, 0.1);
         }
 
         .logo {
@@ -73,18 +74,19 @@
         .logo-icon {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #14b8a6, #10b981);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 20px;
+            box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
         }
 
         .logo-text {
             font-size: 1.25rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #14b8a6, #10b981);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -105,7 +107,7 @@
 
         .header-nav a:hover,
         .header-nav a.active {
-            color: #6366f1;
+            color: #14b8a6;
         }
 
         /* Main Content */
@@ -145,7 +147,7 @@
         .content-card {
             background: rgba(30, 41, 59, 0.6);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(20, 184, 166, 0.1);
             border-radius: 24px;
             padding: 28px;
             margin-bottom: 20px;
@@ -164,7 +166,7 @@
         .content-card h2 .icon {
             width: 36px;
             height: 36px;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.2), rgba(16, 185, 129, 0.2));
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -201,13 +203,13 @@
 
         .step-item:hover {
             background: rgba(51, 65, 85, 0.5);
-            border-color: rgba(99, 102, 241, 0.2);
+            border-color: rgba(20, 184, 166, 0.2);
         }
 
         .step-number {
             width: 36px;
             height: 36px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #14b8a6, #10b981);
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -241,7 +243,7 @@
         }
 
         .faq-item:hover {
-            border-color: rgba(99, 102, 241, 0.2);
+            border-color: rgba(20, 184, 166, 0.2);
         }
 
         .faq-question {
@@ -256,7 +258,7 @@
         }
 
         .faq-question:hover {
-            background: rgba(99, 102, 241, 0.05);
+            background: rgba(20, 184, 166, 0.05);
         }
 
         .faq-icon {
@@ -287,8 +289,8 @@
 
         /* Tips Box */
         .tips-box {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
-            border: 1px solid rgba(99, 102, 241, 0.2);
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.1), rgba(16, 185, 129, 0.1));
+            border: 1px solid rgba(20, 184, 166, 0.2);
             border-radius: 16px;
             padding: 20px;
             margin-top: 14px;
@@ -338,12 +340,12 @@
         }
 
         .example-table th {
-            background: rgba(99, 102, 241, 0.1);
+            background: rgba(20, 184, 166, 0.1);
             font-weight: 600;
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            color: #818cf8;
+            color: #2dd4bf;
         }
 
         .example-table td {
@@ -356,7 +358,7 @@
         }
 
         .calculation-result {
-            background: rgba(99, 102, 241, 0.1);
+            background: rgba(20, 184, 166, 0.1);
             border-radius: 8px;
             padding: 14px;
             margin-top: 14px;
@@ -365,14 +367,14 @@
 
         .calculation-result .formula {
             font-size: 0.825rem;
-            color: #818cf8;
+            color: #2dd4bf;
             margin-bottom: 6px;
         }
 
         .calculation-result .result {
             font-size: 1.35rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #14b8a6, #10b981);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -382,8 +384,8 @@
         .cta-section {
             text-align: center;
             padding: 32px 24px;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
-            border: 1px solid rgba(99, 102, 241, 0.2);
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.1), rgba(16, 185, 129, 0.1));
+            border: 1px solid rgba(20, 184, 166, 0.2);
             border-radius: 20px;
         }
 
@@ -404,7 +406,7 @@
             align-items: center;
             gap: 8px;
             padding: 12px 24px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #14b8a6, #10b981);
             color: white;
             border: none;
             border-radius: 12px;
@@ -418,7 +420,7 @@
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 8px 25px rgba(20, 184, 166, 0.4);
         }
 
         /* Footer */
@@ -447,7 +449,7 @@
         }
 
         .footer-links a:hover {
-            color: #6366f1;
+            color: #14b8a6;
         }
 
         .footer-copyright {
@@ -461,7 +463,7 @@
         }
 
         .footer-credit a {
-            color: #6366f1;
+            color: #14b8a6;
             text-decoration: none;
         }
 

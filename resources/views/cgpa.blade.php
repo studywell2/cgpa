@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
     <title>University CGPA Calculator</title>
 
     <!-- Google Fonts -->
@@ -17,7 +18,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #134e4a 50%, #0f172a 100%);
             min-height: 100vh;
             color: #e2e8f0;
             position: relative;
@@ -40,10 +41,10 @@
             position: absolute;
             width: 4px;
             height: 4px;
-            background: rgba(99, 102, 241, 0.3);
+            background: rgba(20, 184, 166, 0.3);
             border-radius: 50%;
             animation: float 15s infinite ease-in-out;
-            box-shadow: 0 0 6px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 0 6px rgba(20, 184, 166, 0.4);
         }
 
         @keyframes float {
@@ -67,7 +68,7 @@
         .orb-1 {
             width: 400px;
             height: 400px;
-            background: #6366f1;
+            background: #14b8a6;
             top: -100px;
             right: -100px;
             animation-delay: 0s;
@@ -76,7 +77,7 @@
         .orb-2 {
             width: 300px;
             height: 300px;
-            background: #8b5cf6;
+            background: #10b981;
             bottom: -50px;
             left: -50px;
             animation-delay: -4s;
@@ -85,7 +86,7 @@
         .orb-3 {
             width: 250px;
             height: 250px;
-            background: #3b82f6;
+            background: #059669;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -107,8 +108,417 @@
             align-items: center;
             background: rgba(15, 23, 42, 0.8);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+            border-bottom: 1px solid rgba(20, 184, 166, 0.1);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: auto;
+            margin-right: 20px;
+        }
+
+        .theme-btn {
+            background: rgba(20, 184, 166, 0.1);
+            border: 1px solid rgba(20, 184, 166, 0.2);
+            color: #14b8a6;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .theme-btn:hover {
+            background: rgba(20, 184, 166, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(20, 184, 166, 0.2);
+        }
+
+        .theme-btn.active {
+            background: rgba(20, 184, 166, 0.3);
+            border-color: rgba(20, 184, 166, 0.4);
+        }
+
+        /* Theme Picker */
+        .theme-picker {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .theme-picker-btn {
+            background: rgba(20, 184, 166, 0.1);
+            border: 1px solid rgba(20, 184, 166, 0.2);
+            color: #14b8a6;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .theme-picker-btn:hover {
+            background: rgba(20, 184, 166, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .theme-picker-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(20, 184, 166, 0.2);
+            border-radius: 12px;
+            padding: 8px;
+            min-width: 180px;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        body.light-mode .theme-picker-dropdown {
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .theme-picker-dropdown.show {
+            display: block;
+            animation: fadeInDown 0.2s ease-out;
+        }
+
+        .theme-option {
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+            margin-bottom: 4px;
+        }
+
+        .theme-option:hover {
+            background: rgba(20, 184, 166, 0.1);
+        }
+
+        .theme-option.active {
+            background: rgba(20, 184, 166, 0.2);
+            border: 1px solid rgba(20, 184, 166, 0.3);
+        }
+
+        .theme-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .theme-name {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #e2e8f0;
+        }
+
+        body.light-mode .theme-name {
+            color: #1e293b;
+        }
+
+        /* Light Mode */
+        body.light-mode {
+            background: linear-gradient(135deg, #f0f9ff 0%, #ecfdf5 50%, #f0f9ff 100%);
+            color: #1e293b;
+        }
+
+        body.light-mode .header {
+            background: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid rgba(20, 184, 166, 0.2);
+        }
+
+        body.light-mode .hamburger span {
+            background: #1e293b;
+        }
+
+        body.light-mode .logo-text {
+            background: linear-gradient(135deg, #0f766e, #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        body.light-mode .header-nav a {
+            color: #64748b;
+        }
+
+        body.light-mode .header-nav a:hover {
+            color: #0f766e;
+            background: rgba(20, 184, 166, 0.1);
+        }
+
+        body.light-mode .calculator-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(20, 184, 166, 0.2);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1),
+                        0 0 0 1px rgba(20, 184, 166, 0.05);
+        }
+
+        body.light-mode .card-title {
+            color: #1e293b;
+        }
+
+        body.light-mode .table-header {
+            color: #64748b;
+        }
+
+        body.light-mode .course-number {
+            color: #0f766e;
+            background: rgba(20, 184, 166, 0.1);
+        }
+
+        body.light-mode .course-row {
+            background: rgba(241, 245, 249, 0.5);
+            border: 1px solid rgba(20, 184, 166, 0.1);
+        }
+
+        body.light-mode .course-row:hover {
+            background: rgba(241, 245, 249, 0.8);
+            border-color: rgba(20, 184, 166, 0.3);
+        }
+
+        body.light-mode .course-input {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(20, 184, 166, 0.2);
+            color: #1e293b;
+        }
+
+        body.light-mode .grade-select {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(20, 184, 166, 0.2);
+            color: #1e293b;
+        }
+
+        body.light-mode .hero h1 {
+            background: linear-gradient(135deg, #1e293b, #64748b, #0f766e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        body.light-mode .hero p {
+            color: #64748b;
+        }
+
+        body.light-mode .results-card {
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.05), rgba(16, 185, 129, 0.05));
+            border: 1px solid rgba(20, 184, 166, 0.2);
+        }
+
+        body.light-mode .cgpa-label {
+            color: #64748b;
+        }
+
+        body.light-mode .stat-value {
+            color: #1e293b;
+        }
+
+        body.light-mode .stat-label {
+            color: #94a3b8;
+        }
+
+        body.light-mode .stat-item {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        body.light-mode .stat-item:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        body.light-mode .grading-info {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(20, 184, 166, 0.2);
+        }
+
+        body.light-mode .grading-info h3 {
+            color: #1e293b;
+        }
+
+        body.light-mode .grading-item {
+            background: rgba(241, 245, 249, 0.5);
+        }
+
+        body.light-mode .grading-item:hover {
+            background: rgba(241, 245, 249, 0.8);
+        }
+
+        body.light-mode .footer {
+            color: #64748b;
+        }
+
+        body.light-mode .footer-links a {
+            color: #64748b;
+        }
+
+        body.light-mode .footer-links a:hover {
+            color: #0f766e;
+            background: rgba(20, 184, 166, 0.1);
+        }
+
+        body.light-mode .footer-credit {
+            color: #94a3b8;
+        }
+
+        body.light-mode .footer-credit a {
+            color: #0f766e;
+        }
+
+        body.light-mode .social-icon {
+            background: rgba(20, 184, 166, 0.1);
+            border: 1px solid rgba(20, 184, 166, 0.2);
+            color: #64748b;
+        }
+
+        body.light-mode .social-icon:hover {
+            background: rgba(20, 184, 166, 0.2);
+            border-color: rgba(20, 184, 166, 0.4);
+            color: #0f766e;
+        }
+
+        /* Real-time CGPA Preview */
+        .cgpa-preview {
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.1), rgba(16, 185, 129, 0.1));
+            border: 1px solid rgba(20, 184, 166, 0.2);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        body.light-mode .cgpa-preview {
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.05), rgba(16, 185, 129, 0.05));
+            border: 1px solid rgba(20, 184, 166, 0.2);
+        }
+
+        .cgpa-preview.show {
+            display: block;
+        }
+
+        .cgpa-preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .cgpa-preview-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .cgpa-preview-title::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #14b8a6;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .cgpa-preview-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #14b8a6, #10b981, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .cgpa-preview-meta {
+            display: flex;
+            gap: 20px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(20, 184, 166, 0.1);
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .cgpa-preview-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Improved Animations */
+        .calculator-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .calculator-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5),
+                        0 0 0 1px rgba(20, 184, 166, 0.1);
+        }
+
+        body.light-mode .calculator-card:hover {
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.15),
+                        0 0 0 1px rgba(20, 184, 166, 0.15);
+        }
+
+        /* Success Animation */
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .cgpa-value.animate {
+            animation: successPulse 0.6s ease-out;
+        }
+
+        /* Input Focus Effects */
+        .course-row:focus-within {
+            border-color: rgba(20, 184, 166, 0.4);
+            background: rgba(51, 65, 85, 0.6);
+            transform: translateX(4px);
+        }
+
+        body.light-mode .course-row:focus-within {
+            background: rgba(241, 245, 249, 0.8);
+        }
+
+        /* Card hover improvements */
+        .calculator-card:hover {
+            border-color: rgba(20, 184, 166, 0.2);
+        }
+
+        /* Improved input focus */
+        .course-input:focus, .grade-select:focus {
+            outline: none;
+            border-color: #14b8a6;
+            box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1), 0 0 20px rgba(20, 184, 166, 0.1);
+            transform: translateY(-2px) scale(1.02);
         }
 
         .hamburger {
@@ -122,7 +532,11 @@
         }
 
         .hamburger:hover {
-            background: rgba(99, 102, 241, 0.1);
+            background: rgba(20, 184, 166, 0.1);
+        }
+
+        body.light-mode .hamburger:hover {
+            background: rgba(20, 184, 166, 0.15);
         }
 
         .hamburger span {
@@ -133,9 +547,13 @@
             border-radius: 2px;
         }
 
+        body.light-mode .hamburger span {
+            background: #1e293b;
+        }
+
         .hamburger.active span:nth-child(1) {
             transform: rotate(-45deg) translate(-5px, 6px);
-            background: #6366f1;
+            background: #14b8a6;
         }
 
         .hamburger.active span:nth-child(2) {
@@ -144,7 +562,7 @@
 
         .hamburger.active span:nth-child(3) {
             transform: rotate(45deg) translate(-5px, -6px);
-            background: #6366f1;
+            background: #14b8a6;
         }
 
         .logo {
@@ -162,25 +580,25 @@
         .logo-icon {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #14b8a6, #10b981);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 20px;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
             transition: all 0.3s;
         }
 
         .logo:hover .logo-icon {
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+            box-shadow: 0 6px 20px rgba(20, 184, 166, 0.5);
             transform: translateY(-2px);
         }
 
         .logo-text {
             font-size: 1.25rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #14b8a6, #10b981);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -210,14 +628,14 @@
             left: 50%;
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            background: linear-gradient(90deg, #14b8a6, #10b981);
             transition: all 0.3s;
             transform: translateX(-50%);
         }
 
         .header-nav a:hover {
-            color: #6366f1;
-            background: rgba(99, 102, 241, 0.1);
+            color: #14b8a6;
+            background: rgba(20, 184, 166, 0.1);
         }
 
         .header-nav a:hover::before {
@@ -255,7 +673,7 @@
             font-size: 2.25rem;
             font-weight: 800;
             margin-bottom: 12px;
-            background: linear-gradient(135deg, #f8fafc, #94a3b8, #6366f1);
+            background: linear-gradient(135deg, #f8fafc, #94a3b8, #14b8a6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -281,11 +699,11 @@
         .calculator-card {
             background: rgba(30, 41, 59, 0.6);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(20, 184, 166, 0.1);
             border-radius: 24px;
             padding: 28px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5),
-                        0 0 0 1px rgba(99, 102, 241, 0.05);
+                        0 0 0 1px rgba(20, 184, 166, 0.05);
             animation: fadeInUp 0.8s ease-out 0.2s backwards;
         }
 
@@ -319,7 +737,7 @@
         .card-title-icon {
             width: 32px;
             height: 32px;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.2), rgba(16, 185, 129, 0.2));
             border-radius: 8px;
             display: flex;
             align-items: center;
@@ -328,19 +746,19 @@
         }
 
         .semester-badge {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #14b8a6, #10b981);
             color: white;
             padding: 6px 16px;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 600;
-            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 2px 8px rgba(20, 184, 166, 0.3);
             transition: all 0.3s;
         }
 
         .semester-badge:hover {
             transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 4px 12px rgba(20, 184, 166, 0.4);
         }
 
         /* Courses List */
@@ -357,7 +775,7 @@
             background: rgba(51, 65, 85, 0.3);
             border-radius: 12px;
             margin-bottom: 8px;
-            border: 1px solid rgba(99, 102, 241, 0.05);
+            border: 1px solid rgba(20, 184, 166, 0.05);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             animation: slideIn 0.4s ease-out;
         }
@@ -375,7 +793,7 @@
 
         .course-row:hover {
             background: rgba(51, 65, 85, 0.5);
-            border-color: rgba(99, 102, 241, 0.2);
+            border-color: rgba(20, 184, 166, 0.2);
             transform: translateX(4px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
@@ -383,16 +801,16 @@
         .course-number {
             font-size: 0.7rem;
             font-weight: 600;
-            color: #6366f1;
+            color: #14b8a6;
             text-align: center;
             padding: 4px 8px;
-            background: rgba(99, 102, 241, 0.1);
+            background: rgba(20, 184, 166, 0.1);
             border-radius: 6px;
         }
 
         .course-input {
             background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(20, 184, 166, 0.1);
             border-radius: 8px;
             padding: 10px 14px;
             color: #e2e8f0;
@@ -403,13 +821,13 @@
 
         .course-input:focus {
             outline: none;
-            border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            border-color: #14b8a6;
+            box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
             transform: translateY(-1px);
         }
 
         .course-input:hover {
-            border-color: rgba(99, 102, 241, 0.3);
+            border-color: rgba(20, 184, 166, 0.3);
         }
 
         .course-input::placeholder {
@@ -418,7 +836,7 @@
 
         .grade-select {
             background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(20, 184, 166, 0.1);
             border-radius: 8px;
             padding: 10px 14px;
             color: #e2e8f0;
@@ -427,7 +845,7 @@
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236366f1' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2314b8a6' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 12px center;
             padding-right: 36px;
@@ -435,13 +853,13 @@
 
         .grade-select:focus {
             outline: none;
-            border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            border-color: #14b8a6;
+            box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
             transform: translateY(-1px);
         }
 
         .grade-select:hover {
-            border-color: rgba(99, 102, 241, 0.3);
+            border-color: rgba(20, 184, 166, 0.3);
         }
 
         .grade-badge {
@@ -541,18 +959,39 @@
             height: 300px;
         }
 
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(45deg) translate(-100%, -100%);
+            transition: transform 0.6s;
+        }
+
+        .btn:hover::after {
+            transform: rotate(45deg) translate(100%, 100%);
+        }
+
         .btn-add {
-            background: rgba(99, 102, 241, 0.1);
-            color: #818cf8;
-            border: 1px solid rgba(99, 102, 241, 0.2);
+            background: rgba(20, 184, 166, 0.1);
+            color: #2dd4bf;
+            border: 1px solid rgba(20, 184, 166, 0.2);
             flex: 1;
         }
 
         .btn-add:hover {
-            background: rgba(99, 102, 241, 0.2);
-            border-color: rgba(99, 102, 241, 0.3);
+            background: rgba(20, 184, 166, 0.2);
+            border-color: rgba(20, 184, 166, 0.3);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+            box-shadow: 0 4px 12px rgba(20, 184, 166, 0.2);
         }
 
         .btn-add:active {
@@ -560,19 +999,45 @@
         }
 
         .btn-calculate {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #14b8a6, #10b981);
             color: white;
             flex: 2;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 15px rgba(20, 184, 166, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-calculate::before {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.5), rgba(52, 211, 153, 0.5));
         }
 
         .btn-calculate:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 8px 25px rgba(20, 184, 166, 0.4);
         }
 
         .btn-calculate:active {
             transform: translateY(0);
+        }
+
+        /* Calculate button success animation */
+        .btn-calculate.calculating {
+            pointer-events: none;
+        }
+
+        .btn-calculate.calculating::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         .btn-reset {
@@ -592,6 +1057,18 @@
             transform: translateY(0);
         }
 
+        .btn-view-analytics {
+            background: linear-gradient(135deg, #14b8a6, #10b981);
+            color: white;
+            width: 100%;
+            margin-top: 16px;
+        }
+
+        .btn-view-analytics:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(20, 184, 166, 0.4);
+        }
+
         /* Results Section */
         .results-section {
             margin-top: 32px;
@@ -609,12 +1086,12 @@
         }
 
         .results-card {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
-            border: 1px solid rgba(99, 102, 241, 0.2);
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.1), rgba(16, 185, 129, 0.1));
+            border: 1px solid rgba(20, 184, 166, 0.2);
             border-radius: 20px;
             padding: 28px;
             text-align: center;
-            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.1);
+            box-shadow: 0 10px 40px rgba(20, 184, 166, 0.1);
         }
 
         .cgpa-display {
@@ -633,12 +1110,12 @@
         .cgpa-value {
             font-size: 3.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6, #a78bfa);
+            background: linear-gradient(135deg, #14b8a6, #10b981, #34d399);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             line-height: 1;
-            text-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+            text-shadow: 0 0 30px rgba(20, 184, 166, 0.3);
         }
 
         .cgpa-class {
@@ -666,7 +1143,7 @@
             gap: 16px;
             margin-top: 24px;
             padding-top: 24px;
-            border-top: 1px solid rgba(99, 102, 241, 0.1);
+            border-top: 1px solid rgba(20, 184, 166, 0.1);
         }
 
         .stat-item {
@@ -700,7 +1177,7 @@
         .grading-info {
             margin-top: 32px;
             background: rgba(30, 41, 59, 0.4);
-            border: 1px solid rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(20, 184, 166, 0.1);
             border-radius: 16px;
             padding: 20px;
             animation: fadeIn 0.8s ease-out 0.4s backwards;
@@ -735,7 +1212,7 @@
 
         .grading-item:hover {
             background: rgba(51, 65, 85, 0.5);
-            border-color: rgba(99, 102, 241, 0.2);
+            border-color: rgba(20, 184, 166, 0.2);
             transform: translateY(-2px);
         }
 
@@ -778,8 +1255,8 @@
         }
 
         .footer-links a:hover {
-            color: #6366f1;
-            background: rgba(99, 102, 241, 0.1);
+            color: #14b8a6;
+            background: rgba(20, 184, 166, 0.1);
         }
 
         .footer-copyright {
@@ -793,14 +1270,292 @@
         }
 
         .footer-credit a {
-            color: #6366f1;
+            color: #14b8a6;
             text-decoration: none;
             transition: all 0.3s;
         }
 
         .footer-credit a:hover {
             text-decoration: underline;
-            color: #8b5cf6;
+            color: #10b981;
+        }
+
+        /* Analytics Charts Section */
+        .analytics-section {
+            margin-top: 32px;
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(20, 184, 166, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            animation: fadeIn 0.8s ease-out 0.6s backwards;
+            display: none;
+        }
+
+        body.light-mode .analytics-section {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(20, 184, 166, 0.2);
+        }
+
+        .analytics-section.show {
+            display: block;
+        }
+
+        .analytics-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .analytics-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #e2e8f0;
+        }
+
+        body.light-mode .analytics-header h3 {
+            color: #1e293b;
+        }
+
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .chart-card {
+            background: rgba(51, 65, 85, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(20, 184, 166, 0.1);
+        }
+
+        body.light-mode .chart-card {
+            background: rgba(241, 245, 249, 0.5);
+        }
+
+        .chart-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #94a3b8;
+            margin-bottom: 16px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .grade-bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .grade-bar-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .grade-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            width: 30px;
+            text-align: center;
+        }
+
+        .grade-bar-container {
+            flex: 1;
+            height: 24px;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        body.light-mode .grade-bar-container {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .grade-bar {
+            height: 100%;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: white;
+            min-width: 0;
+            transition: width 0.5s ease-out;
+        }
+
+        .grade-count {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            width: 30px;
+            text-align: center;
+        }
+
+        body.light-mode .grade-count {
+            color: #64748b;
+        }
+
+        .chart-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 16px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        /* Target Calculator Section */
+        .target-calculator {
+            margin-top: 32px;
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(20, 184, 166, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            animation: fadeIn 0.8s ease-out 0.8s backwards;
+        }
+
+        body.light-mode .target-calculator {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(20, 184, 166, 0.2);
+        }
+
+        .target-calculator h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #e2e8f0;
+        }
+
+        body.light-mode .target-calculator h3 {
+            color: #1e293b;
+        }
+
+        .target-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .target-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .target-input-group label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #94a3b8;
+        }
+
+        .target-input {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(20, 184, 166, 0.1);
+            border-radius: 8px;
+            padding: 12px 14px;
+            color: #e2e8f0;
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
+        }
+
+        body.light-mode .target-input {
+            background: rgba(255, 255, 255, 0.8);
+            color: #1e293b;
+        }
+
+        .target-input:focus {
+            outline: none;
+            border-color: #14b8a6;
+            box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
+        }
+
+        .target-results {
+            background: rgba(51, 65, 85, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(20, 184, 166, 0.1);
+            display: none;
+        }
+
+        body.light-mode .target-results {
+            background: rgba(241, 245, 249, 0.5);
+        }
+
+        .target-results.show {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .target-result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(20, 184, 166, 0.1);
+        }
+
+        .target-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .target-result-label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        .target-result-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #e2e8f0;
+        }
+
+        body.light-mode .target-result-value {
+            color: #1e293b;
+        }
+
+        .target-result-value.highlight {
+            color: #14b8a6;
+            background: rgba(20, 184, 166, 0.1);
+            padding: 4px 12px;
+            border-radius: 6px;
+        }
+
+        .btn-calculate-target {
+            background: linear-gradient(135deg, #14b8a6, #10b981);
+            color: white;
+            width: 100%;
+            margin-top: 16px;
+        }
+
+        .btn-calculate-target:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(20, 184, 166, 0.4);
         }
 
         /* Social Media Icons */
@@ -818,8 +1573,8 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.2);
+            background: rgba(20, 184, 166, 0.1);
+            border: 1px solid rgba(20, 184, 166, 0.2);
             color: #94a3b8;
             text-decoration: none;
             font-size: 1.2rem;
@@ -828,11 +1583,11 @@
         }
 
         .social-icon:hover {
-            background: rgba(99, 102, 241, 0.2);
-            border-color: rgba(99, 102, 241, 0.4);
-            color: #6366f1;
+            background: rgba(20, 184, 166, 0.2);
+            border-color: rgba(20, 184, 166, 0.4);
+            color: #14b8a6;
             transform: translateY(-4px) scale(1.1);
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 6px 20px rgba(20, 184, 166, 0.3);
         }
 
         .social-icon:active {
@@ -849,23 +1604,32 @@
                 font-size: 1rem;
             }
 
+            .theme-picker, .theme-toggle {
+                order: 3;
+            }
+
+            .theme-picker-btn, .theme-btn {
+                padding: 6px 10px;
+                font-size: 0.75rem;
+            }
+
             .header-nav {
                 position: fixed;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: rgba(15, 23, 42, 0.95);
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                gap: 20px;
-                padding: 20px;
-                transform: translateY(-100%);
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s;
-                border-bottom: 1px solid rgba(99, 102, 241, 0.1);
-                z-index: 1000;
-            }
+                    top: 100%;
+                    left: 0;
+                    width: 100%;
+                    background: rgba(15, 23, 42, 0.95);
+                    backdrop-filter: blur(20px);
+                    flex-direction: column;
+                    gap: 20px;
+                    padding: 20px;
+                    transform: translateY(-100%);
+                    opacity: 0;
+                    visibility: hidden;
+                    transition: all 0.3s;
+                    border-bottom: 1px solid rgba(20, 184, 166, 0.1);
+                    z-index: 1000;
+                }
 
             .header-nav.active {
                 transform: translateY(0);
@@ -1055,6 +1819,40 @@
             <a href="/about">About</a>
             <a href="/help">Help</a>
         </nav>
+        <div class="theme-picker">
+            <button class="theme-picker-btn" id="themePickerBtn" onclick="toggleThemePicker()">
+                <span>🎨</span>
+                <span>Theme</span>
+            </button>
+            <div class="theme-picker-dropdown" id="themePickerDropdown">
+                <div class="theme-option active" onclick="setTheme('teal')">
+                    <div class="theme-color" style="background: linear-gradient(135deg, #14b8a6, #10b981);"></div>
+                    <span class="theme-name">Teal Green</span>
+                </div>
+                <div class="theme-option" onclick="setTheme('purple')">
+                    <div class="theme-color" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);"></div>
+                    <span class="theme-name">Purple</span>
+                </div>
+                <div class="theme-option" onclick="setTheme('blue')">
+                    <div class="theme-color" style="background: linear-gradient(135deg, #3b82f6, #06b6d4);"></div>
+                    <span class="theme-name">Blue Cyan</span>
+                </div>
+                <div class="theme-option" onclick="setTheme('orange')">
+                    <div class="theme-color" style="background: linear-gradient(135deg, #f97316, #eab308);"></div>
+                    <span class="theme-name">Orange Amber</span>
+                </div>
+                <div class="theme-option" onclick="setTheme('pink')">
+                    <div class="theme-color" style="background: linear-gradient(135deg, #ec4899, #f43f5e);"></div>
+                    <span class="theme-name">Pink Rose</span>
+                </div>
+            </div>
+        </div>
+        <div class="theme-toggle">
+            <button class="theme-btn" id="themeToggle" onclick="toggleTheme()">
+                <span>🌙</span>
+                <span id="themeText">Dark</span>
+            </button>
+        </div>
         <div class="hamburger" id="hamburger">
             <span></span>
             <span></span>
@@ -1078,6 +1876,18 @@
                     Course Entries
                 </div>
                 <span class="semester-badge" id="courseCount">0 Courses</span>
+            </div>
+
+            <!-- Real-time CGPA Preview -->
+            <div class="cgpa-preview" id="cgpaPreview">
+                <div class="cgpa-preview-header">
+                    <span class="cgpa-preview-title">Live Preview</span>
+                </div>
+                <div class="cgpa-preview-value" id="previewCgpaValue">0.00</div>
+                <div class="cgpa-preview-meta">
+                    <span id="previewTotalUnits">📊 0 Units</span>
+                    <span id="previewTotalPoints">⭐ 0 Points</span>
+                </div>
             </div>
 
             <form method="POST" action="/calculate" id="cgpaForm">
@@ -1137,9 +1947,71 @@
                             <div class="stat-label">Courses</div>
                         </div>
                     </div>
+
+                    <div style="margin-top: 20px;">
+                        <button class="btn btn-calculate" onclick="showAnalytics()" style="width: 100%;">
+                            <span>📊</span> View Grade Analytics
+                        </button>
+                    </div>
                 </div>
             </div>
             @endif
+        </div>
+
+        <!-- Analytics Section -->
+        <div class="analytics-section" id="analyticsSection">
+            <div class="analytics-header">
+                <h3>📊 Grade Analytics</h3>
+                <button class="btn btn-reset" onclick="toggleAnalytics()" style="padding: 6px 12px; font-size: 0.75rem;">
+                    <span>✕</span> Close
+                </button>
+            </div>
+            <div class="charts-container">
+                <div class="chart-card">
+                    <div class="chart-title">Grade Distribution</div>
+                    <div class="grade-bar-chart" id="gradeBarChart">
+                        <!-- Bars will be generated by JavaScript -->
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-title">Grade Statistics</div>
+                    <div id="gradeStatistics" style="text-align: center; padding: 20px;">
+                        <!-- Statistics will be generated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Target Calculator -->
+        <div class="target-calculator">
+            <h3>🎯 Target CGPA Calculator</h3>
+            <p style="color: #94a3b8; margin-bottom: 20px; font-size: 0.9rem;">
+                Calculate what grades you need to achieve your target CGPA
+            </p>
+            <div class="target-inputs">
+                <div class="target-input-group">
+                    <label for="currentCgpa">Current CGPA</label>
+                    <input type="number" id="currentCgpa" class="target-input" placeholder="e.g., 3.50" step="0.01" min="0" max="5.00">
+                </div>
+                <div class="target-input-group">
+                    <label for="currentUnits">Current Total Units</label>
+                    <input type="number" id="currentUnits" class="target-input" placeholder="e.g., 30" min="1">
+                </div>
+                <div class="target-input-group">
+                    <label for="targetCgpa">Target CGPA</label>
+                    <input type="number" id="targetCgpa" class="target-input" placeholder="e.g., 4.00" step="0.01" min="0" max="5.00">
+                </div>
+                <div class="target-input-group">
+                    <label for="futureUnits">Future Course Units</label>
+                    <input type="number" id="futureUnits" class="target-input" placeholder="e.g., 15" min="1">
+                </div>
+            </div>
+            <button class="btn btn-calculate-target" onclick="calculateTarget()">
+                <span>🎯</span> Calculate Required Grades
+            </button>
+            <div class="target-results" id="targetResults">
+                <!-- Results will be generated by JavaScript -->
+            </div>
         </div>
 
         <!-- Grading Scale Information -->
@@ -1216,6 +2088,8 @@
             createParticles();
             initSmoothScroll();
             initInputAnimations();
+            initThemeToggle();
+            initRealtimeCgpa();
         });
 
         function addCourse() {
@@ -1285,16 +2159,6 @@
         function updateCourseCount() {
             const count = document.querySelectorAll('.course-row').length;
             document.getElementById('courseCount').textContent = `${count} Course${count !== 1 ? 's' : ''}`;
-        }
-
-        function updateGradeBadge(select) {
-            // Visual feedback for grade selection
-            select.style.borderColor = '#6366f1';
-            select.style.boxShadow = '0 0 0 3px rgba(99, 102, 241, 0.2)';
-            setTimeout(() => {
-                select.style.borderColor = '';
-                select.style.boxShadow = '';
-            }, 500);
         }
 
         function resetForm() {
@@ -1379,8 +2243,30 @@
             if (hasError) {
                 e.preventDefault();
                 showNotification('Please enter valid credit units (1-6) for all courses.', 'error');
+            } else {
+                // Add loading animation
+                const calculateBtn = document.querySelector('.btn-calculate');
+                calculateBtn.classList.add('calculating');
+                calculateBtn.innerHTML = '<span></span> Calculating...';
+
+                // Remove loading state after form submission (server will handle actual calculation)
+                setTimeout(() => {
+                    calculateBtn.classList.remove('calculating');
+                    calculateBtn.innerHTML = '<span>🧮</span> Calculate CGPA';
+                }, 2000);
             }
         });
+
+        // Grade badge update function
+        function updateGradeBadge(select) {
+            // Visual feedback for grade selection
+            select.style.borderColor = '#14b8a6';
+            select.style.boxShadow = '0 0 0 3px rgba(20, 184, 166, 0.2)';
+            setTimeout(() => {
+                select.style.borderColor = '';
+                select.style.boxShadow = '';
+            }, 500);
+        }
 
         // Smooth scroll for anchor links
         function initSmoothScroll() {
@@ -1409,6 +2295,233 @@
                 });
             });
         }
+
+        // Theme Toggle Functionality
+        const colorThemes = {
+            teal: {
+                primary: '#14b8a6',
+                secondary: '#10b981',
+                accent: '#34d399',
+                light: '#2dd4bf',
+                dark: '#0f766e',
+                gradient: 'linear-gradient(135deg, #14b8a6, #10b981, #34d399)'
+            },
+            purple: {
+                primary: '#6366f1',
+                secondary: '#8b5cf6',
+                accent: '#a78bfa',
+                light: '#818cf8',
+                dark: '#4f46e5',
+                gradient: 'linear-gradient(135deg, #6366f1, #8b5cf6, #a78bfa)'
+            },
+            blue: {
+                primary: '#3b82f6',
+                secondary: '#06b6d4',
+                accent: '#0ea5e9',
+                light: '#60a5fa',
+                dark: '#2563eb',
+                gradient: 'linear-gradient(135deg, #3b82f6, #06b6d4, #0ea5e9)'
+            },
+            orange: {
+                primary: '#f97316',
+                secondary: '#eab308',
+                accent: '#fbbf24',
+                light: '#fb923c',
+                dark: '#ea580c',
+                gradient: 'linear-gradient(135deg, #f97316, #eab308, #fbbf24)'
+            },
+            pink: {
+                primary: '#ec4899',
+                secondary: '#f43f5e',
+                accent: '#fb7185',
+                light: '#f472b6',
+                dark: '#db2777',
+                gradient: 'linear-gradient(135deg, #ec4899, #f43f5e, #fb7185)'
+            }
+        };
+
+        let currentColorTheme = 'teal';
+
+        function initThemeToggle() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const savedColorTheme = localStorage.getItem('colorTheme') || 'teal';
+
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                document.getElementById('themeToggle').querySelector('span:first-child').textContent = '☀️';
+                document.getElementById('themeText').textContent = 'Light';
+            }
+
+            if (savedColorTheme && colorThemes[savedColorTheme]) {
+                setColorTheme(savedColorTheme);
+            }
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.getElementById('themeToggle');
+            const themeText = document.getElementById('themeText');
+            const icon = themeToggle.querySelector('span:first-child');
+
+            if (body.classList.contains('light-mode')) {
+                body.classList.remove('light-mode');
+                icon.textContent = '🌙';
+                themeText.textContent = 'Dark';
+                localStorage.setItem('theme', 'dark');
+                showNotification('Switched to dark mode', 'info');
+            } else {
+                body.classList.add('light-mode');
+                icon.textContent = '☀️';
+                themeText.textContent = 'Light';
+                localStorage.setItem('theme', 'light');
+                showNotification('Switched to light mode', 'info');
+            }
+        }
+
+        function toggleThemePicker() {
+            const dropdown = document.getElementById('themePickerDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        function setTheme(themeName) {
+            setColorTheme(themeName);
+            localStorage.setItem('colorTheme', themeName);
+
+            // Update active state
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+
+            // Close dropdown
+            setTimeout(() => {
+                document.getElementById('themePickerDropdown').classList.remove('show');
+            }, 200);
+
+            showNotification(`Switched to ${themeName.charAt(0).toUpperCase() + themeName.slice(1)} theme`, 'success');
+        }
+
+        function setColorTheme(themeName) {
+            currentColorTheme = themeName;
+            const theme = colorThemes[themeName];
+
+            if (!theme) return;
+
+            // Update CSS variables and styles dynamically
+            const styleElement = document.getElementById('dynamic-theme') || document.createElement('style');
+            styleElement.id = 'dynamic-theme';
+
+            const css = `
+                body:not(.light-mode) { --primary-color: ${theme.primary}; --secondary-color: ${theme.secondary}; --accent-color: ${theme.accent}; }
+                body.light-mode { --primary-color: ${theme.dark}; --secondary-color: ${theme.primary}; --accent-color: ${theme.light}; }
+            `;
+
+            styleElement.textContent = css;
+            document.head.appendChild(styleElement);
+
+            // Update specific elements
+            updateThemeColors(theme);
+        }
+
+        function updateThemeColors(theme) {
+            // This is a simplified version - in production, you'd update all theme-related CSS
+            // For now, the dynamic CSS variables will handle most cases
+
+            // Update gradient orbs
+            document.querySelector('.orb-1').style.background = theme.primary;
+            document.querySelector('.orb-2').style.background = theme.secondary;
+            document.querySelector('.orb-3').style.background = theme.dark;
+
+            // Update particles
+            document.querySelectorAll('.particle').forEach(p => {
+                p.style.background = `rgba(${hexToRgb(theme.primary)}, 0.3)`;
+                p.style.boxShadow = `0 0 6px rgba(${hexToRgb(theme.primary)}, 0.4)`;
+            });
+        }
+
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ?
+                `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` :
+                '20, 184, 166';
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const themePicker = document.querySelector('.theme-picker');
+            if (!themePicker.contains(event.target)) {
+                document.getElementById('themePickerDropdown').classList.remove('show');
+            }
+        });
+
+        // Real-time CGPA Calculation
+        function initRealtimeCgpa() {
+            const container = document.getElementById('courses');
+
+            // Use event delegation for better performance
+            container.addEventListener('input', debounce(updateRealtimeCgpa, 300));
+            container.addEventListener('change', updateRealtimeCgpa);
+        }
+
+        function updateRealtimeCgpa() {
+            const units = document.querySelectorAll('input[name="units[]"]');
+            const grades = document.querySelectorAll('select[name="grades[]"]');
+            const preview = document.getElementById('cgpaPreview');
+            const previewValue = document.getElementById('previewCgpaValue');
+            const previewUnits = document.getElementById('previewTotalUnits');
+            const previewPoints = document.getElementById('previewTotalPoints');
+
+            let totalUnits = 0;
+            let totalPoints = 0;
+            let hasValidData = false;
+
+            for (let i = 0; i < units.length; i++) {
+                const unitValue = parseFloat(units[i].value);
+                const gradeValue = grades[i].value;
+
+                if (!isNaN(unitValue) && unitValue > 0 && gradePoints[gradeValue] !== undefined) {
+                    totalUnits += unitValue;
+                    totalPoints += unitValue * gradePoints[gradeValue];
+                    hasValidData = true;
+                }
+            }
+
+            if (hasValidData && totalUnits > 0) {
+                const cgpa = totalPoints / totalUnits;
+                previewValue.textContent = cgpa.toFixed(2);
+                previewUnits.textContent = `📊 ${totalUnits} Units`;
+                previewPoints.textContent = `⭐ ${totalPoints.toFixed(1)} Points`;
+                preview.classList.add('show');
+            } else {
+                preview.classList.remove('show');
+            }
+        }
+
+        // Debounce function to prevent excessive calculations
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Add event listeners to update real-time CGPA when courses are added/removed
+        const originalAddCourse = addCourse;
+        addCourse = function() {
+            originalAddCourse.apply(this, arguments);
+            setTimeout(updateRealtimeCgpa, 100);
+        };
+
+        const originalRemoveCourse = removeCourse;
+        removeCourse = function(btn) {
+            originalRemoveCourse.apply(this, arguments);
+            setTimeout(updateRealtimeCgpa, 350);
+        };
 
         // Notification system
         function showNotification(message, type = 'info') {
@@ -1484,6 +2597,216 @@
                 const speed = (index + 1) * 20;
                 orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
             });
+        });
+
+        // Analytics Functions
+        function toggleAnalytics() {
+            const analyticsSection = document.getElementById('analyticsSection');
+            analyticsSection.classList.toggle('show');
+        }
+
+        function showAnalytics() {
+            updateAnalytics();
+            document.getElementById('analyticsSection').classList.add('show');
+        }
+
+        function updateAnalytics() {
+            const grades = document.querySelectorAll('select[name="grades[]"]');
+            const units = document.querySelectorAll('input[name="units[]"]');
+
+            let gradeCounts = {
+                'A': 0, 'B': 0, 'C': 0, 'D': 0, 'E': 0, 'F': 0
+            };
+
+            let totalUnits = 0;
+            let totalPoints = 0;
+            let validCourses = 0;
+
+            for (let i = 0; i < grades.length; i++) {
+                const unitValue = parseFloat(units[i].value);
+                const gradeValue = grades[i].value;
+
+                if (!isNaN(unitValue) && unitValue > 0) {
+                    gradeCounts[gradeValue] += unitValue;
+                    totalUnits += unitValue;
+                    totalPoints += unitValue * gradePoints[gradeValue];
+                    validCourses++;
+                }
+            }
+
+            if (validCourses > 0) {
+                renderGradeBarChart(gradeCounts, totalUnits);
+                renderGradeStatistics(gradeCounts, totalUnits, totalPoints, validCourses);
+            }
+        }
+
+        function renderGradeBarChart(gradeCounts, totalUnits) {
+            const chartContainer = document.getElementById('gradeBarChart');
+            const gradeColors = {
+                'A': '#22c55e', 'B': '#3b82f6', 'C': '#fbbf24',
+                'D': '#fb923c', 'E': '#f87171', 'F': '#ef4444'
+            };
+
+            let html = '';
+            const grades = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+            grades.forEach(grade => {
+                const count = gradeCounts[grade];
+                const percentage = totalUnits > 0 ? (count / totalUnits * 100).toFixed(1) : 0;
+                const color = gradeColors[grade];
+
+                html += `
+                    <div class="grade-bar-item">
+                        <span class="grade-label">${grade}</span>
+                        <div class="grade-bar-container">
+                            <div class="grade-bar" style="width: ${percentage}%; background: ${color};">
+                                ${percentage > 15 ? `${percentage}%` : ''}
+                            </div>
+                        </div>
+                        <span class="grade-count">${count}</span>
+                    </div>
+                `;
+            });
+
+            chartContainer.innerHTML = html;
+        }
+
+        function renderGradeStatistics(gradeCounts, totalUnits, totalPoints, validCourses) {
+            const statsContainer = document.getElementById('gradeStatistics');
+            const averageCgpa = totalUnits > 0 ? (totalPoints / totalUnits).toFixed(2) : '0.00';
+
+            // Find most common grade
+            let mostCommonGrade = 'None';
+            let maxCount = 0;
+            Object.entries(gradeCounts).forEach(([grade, count]) => {
+                if (count > maxCount && count > 0) {
+                    maxCount = count;
+                    mostCommonGrade = grade;
+                }
+            });
+
+            // Calculate passing rate (A, B, C, D are passing, E and F are failing)
+            const passingUnits = gradeCounts['A'] + gradeCounts['B'] + gradeCounts['C'] + gradeCounts['D'];
+            const passingRate = totalUnits > 0 ? ((passingUnits / totalUnits) * 100).toFixed(1) : '0.0';
+
+            statsContainer.innerHTML = `
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+                    <div>
+                        <div style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 4px;">Average CGPA</div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #14b8a6;">${averageCgpa}</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 4px;">Most Common Grade</div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #e2e8f0;">${mostCommonGrade}</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 4px;">Passing Rate</div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #22c55e;">${passingRate}%</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 4px;">Total Units</div>
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #e2e8f0;">${totalUnits}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Target Calculator Functions
+        function calculateTarget() {
+            const currentCgpa = parseFloat(document.getElementById('currentCgpa').value);
+            const currentUnits = parseInt(document.getElementById('currentUnits').value);
+            const targetCgpa = parseFloat(document.getElementById('targetCgpa').value);
+            const futureUnits = parseInt(document.getElementById('futureUnits').value);
+
+            // Validation
+            if (isNaN(currentCgpa) || isNaN(currentUnits) || isNaN(targetCgpa) || isNaN(futureUnits)) {
+                showNotification('Please fill in all fields with valid numbers', 'error');
+                return;
+            }
+
+            if (currentCgpa < 0 || currentCgpa > 5 || targetCgpa < 0 || targetCgpa > 5) {
+                showNotification('CGPA values must be between 0.00 and 5.00', 'error');
+                return;
+            }
+
+            if (currentUnits <= 0 || futureUnits <= 0) {
+                showNotification('Units must be greater than 0', 'error');
+                return;
+            }
+
+            // Calculate required total points
+            const currentPoints = currentCgpa * currentUnits;
+            const totalUnits = currentUnits + futureUnits;
+            const requiredTotalPoints = targetCgpa * totalUnits;
+            const requiredFuturePoints = requiredTotalPoints - currentPoints;
+            const requiredAverage = requiredFuturePoints / futureUnits;
+
+            const resultsContainer = document.getElementById('targetResults');
+
+            let html = '';
+            let isAchievable = requiredAverage <= 5.0 && requiredAverage >= 0;
+
+            html += `<div class="target-result-item">`;
+            html += `<span class="target-result-label">Current Status</span>`;
+            html += `<span class="target-result-value">${currentCgpa.toFixed(2)} CGPA (${currentUnits} units)</span>`;
+            html += `</div>`;
+
+            html += `<div class="target-result-item">`;
+            html += `<span class="target-result-label">Target Status</span>`;
+            html += `<span class="target-result-value">${targetCgpa.toFixed(2)} CGPA (${totalUnits} units)</span>`;
+            html += `</div>`;
+
+            html += `<div class="target-result-item">`;
+            html += `<span class="target-result-label">Required Average</span>`;
+            html += `<span class="target-result-value ${isAchievable ? 'highlight' : ''}" style="color: ${isAchievable ? '#14b8a6' : '#ef4444'}">${requiredAverage.toFixed(2)}</span>`;
+            html += `</div>`;
+
+            html += `<div class="target-result-item">`;
+            html += `<span class="target-result-label">Required Total Points</span>`;
+            html += `<span class="target-result-value">${requiredFuturePoints.toFixed(1)} points</span>`;
+            html += `</div>`;
+
+            if (isAchievable) {
+                // Calculate required grade breakdown
+                const requiredGrade = getRequiredGrade(requiredAverage);
+                html += `<div class="target-result-item" style="border: none; margin-top: 16px; padding-top: 16px;">`;
+                html += `<span class="target-result-label">Recommendation</span>`;
+                html += `<span class="target-result-value" style="color: #14b8a6;">Aim for ${requiredGrade} average</span>`;
+                html += `</div>`;
+            } else {
+                html += `<div class="target-result-item" style="border: none; margin-top: 16px; padding-top: 16px;">`;
+                html += `<span class="target-result-label" style="color: #ef4444;">Not Achievable</span>`;
+                html += `<span class="target-result-value" style="color: #ef4444;">Target too high</span>`;
+                html += `</div>`;
+            }
+
+            resultsContainer.innerHTML = html;
+            resultsContainer.classList.add('show');
+        }
+
+        function getRequiredGrade(average) {
+            if (average >= 4.5) return 'A grades';
+            if (average >= 3.5) return 'A-B mix';
+            if (average >= 2.5) return 'B-C mix';
+            if (average >= 1.5) return 'C-D mix';
+            if (average >= 0.5) return 'D-E mix';
+            return 'any passing grade';
+        }
+
+        // Update analytics when courses change
+        const originalUpdateCourseCount = updateCourseCount;
+        updateCourseCount = function() {
+            originalUpdateCourseCount.apply(this, arguments);
+            updateAnalytics();
+        };
+
+        // Initialize analytics on page load if there are results
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if there are results from previous calculation
+            const resultsSection = document.querySelector('.results-section.show');
+            if (resultsSection) {
+                showAnalytics();
+            }
         });
     </script>
 </body>
