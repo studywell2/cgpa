@@ -869,7 +869,7 @@
                 Frequently Asked Questions
             </h2>
             <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this, event)">
+                <div class="faq-question" >
                     <span>What is CGPA and how is it different from GPA?</span>
                     <span class="faq-icon">+</span>
                 </div>
@@ -880,7 +880,7 @@
                 </div>
             </div>
             <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this, event)">
+                <div class="faq-question" >
                     <span>How accurate is this calculator?</span>
                     <span class="faq-icon">+</span>
                 </div>
@@ -891,7 +891,7 @@
                 </div>
             </div>
             <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this, event)">
+                <div class="faq-question" >
                     <span>Can I use this for any university?</span>
                     <span class="faq-icon">+</span>
                 </div>
@@ -902,7 +902,7 @@
                 </div>
             </div>
             <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this, event)">
+                <div class="faq-question" >
                     <span>What if my course has no credit units?</span>
                     <span class="faq-icon">+</span>
                 </div>
@@ -913,7 +913,7 @@
                 </div>
             </div>
             <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this, event)">
+                <div class="faq-question" >
                     <span>Can I save my calculations?</span>
                     <span class="faq-icon">+</span>
                 </div>
@@ -924,7 +924,7 @@
                 </div>
             </div>
             <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this, event)">
+                <div class="faq-question" >
                     <span>How do I calculate CGPA for multiple semesters?</span>
                     <span class="faq-icon">+</span>
                 </div>
@@ -994,28 +994,6 @@
             }
         }
 
-        // Toggle FAQ items
-        function toggleFaq(element, event) {
-            // Prevent event bubbling to avoid triggering hamburger menu
-            if (event) {
-                event.stopPropagation();
-                event.preventDefault();
-            }
-
-            const faqItem = element.closest('.faq-item');
-            const isActive = faqItem.classList.contains('active');
-
-            // Close all other FAQ items
-            document.querySelectorAll('.faq-item').forEach(item => {
-                item.classList.remove('active');
-            });
-
-            // Toggle current item
-            if (!isActive) {
-                faqItem.classList.add('active');
-            }
-        }
-
         // Toggle mobile menu
         function toggleMobileMenu() {
             const hamburger = document.querySelector('.hamburger');
@@ -1034,7 +1012,34 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', createParticles);
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            initFaqItems();
+        });
+
+        // Initialize FAQ click handlers
+        function initFaqItems() {
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+
+                    const faqItem = this.closest('.faq-item');
+                    const isActive = faqItem.classList.contains('active');
+
+                    // Close all other FAQ items
+                    document.querySelectorAll('.faq-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+
+                    // Toggle current item
+                    if (!isActive) {
+                        faqItem.classList.add('active');
+                    }
+                });
+            });
+        }
     </script>
 </body>
 </html>
