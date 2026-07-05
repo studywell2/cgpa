@@ -3896,14 +3896,24 @@
         function showGradesView() {
             // Check if there are valid courses
             const units = document.querySelectorAll('input[name="units[]"]');
+            const sessionCourses = {{ isset($courses) ? json_encode($courses) : '[]' }};
+            const sessionUnits = {{ isset($units) ? json_encode($units) : '[]' }};
+            const sessionGrades = {{ isset($grades) ? json_encode($grades) : '[]' }};
+
             let hasValidData = false;
 
+            // Check form inputs first
             units.forEach(input => {
                 const unitValue = parseFloat(input.value);
                 if (!isNaN(unitValue) && unitValue > 0) {
                     hasValidData = true;
                 }
             });
+
+            // If no valid form data, check session data
+            if (!hasValidData && sessionUnits.length > 0) {
+                hasValidData = true;
+            }
 
             if (!hasValidData) {
                 showNotification('Please enter valid course data first', 'warning');
@@ -3919,6 +3929,11 @@
             const units = document.querySelectorAll('input[name="units[]"]');
             const grades = document.querySelectorAll('select[name="grades[]"]');
 
+            // Get session data
+            const sessionCourses = {{ isset($courses) ? json_encode($courses) : '[]' }};
+            const sessionUnits = {{ isset($units) ? json_encode($units) : '[]' }};
+            const sessionGrades = {{ isset($grades) ? json_encode($grades) : '[]' }};
+
             const tableBody = document.getElementById('gradesTableBody');
             const summaryContainer = document.getElementById('gradesSummary');
 
@@ -3929,42 +3944,96 @@
             let failingCourses = 0;
             let validCourses = 0;
 
+            // Check if form inputs have valid data
+            let hasFormData = false;
             for (let i = 0; i < grades.length; i++) {
-                const courseName = courseNames[i].value.trim() || `Course ${i + 1}`;
                 const unitValue = parseFloat(units[i].value);
-                const gradeValue = grades[i].value;
-                const points = gradePoints[gradeValue];
-
                 if (!isNaN(unitValue) && unitValue > 0) {
-                    const coursePoints = unitValue * points;
-                    const isPassing = gradeValue !== 'F' && gradeValue !== 'E';
+                    hasFormData = true;
+                    break;
+                }
+            }
 
-                    totalUnits += unitValue;
-                    totalPoints += coursePoints;
-                    validCourses++;
+            // Use session data if form inputs are empty
+            if (!hasFormData && sessionUnits.length > 0) {
+                // Use session data
+                for (let i = 0; i < sessionUnits.length; i++) {
+                    const courseName = sessionCourses[i] || `Course ${i + 1}`;
+                    const unitValue = parseFloat(sessionUnits[i]);
+                    const gradeValue = sessionGrades[i];
+                    const points = gradePoints[gradeValue];
 
-                    if (isPassing) {
-                        passingCourses++;
-                    } else {
-                        failingCourses++;
+                    if (!isNaN(unitValue) && unitValue > 0) {
+                        const coursePoints = unitValue * points;
+                        const isPassing = gradeValue !== 'F' && gradeValue !== 'E';
+
+                        totalUnits += unitValue;
+                        totalPoints += coursePoints;
+                        validCourses++;
+
+                        if (isPassing) {
+                            passingCourses++;
+                        } else {
+                            failingCourses++;
+                        }
+
+                        html += `
+                            <tr>
+                                <td>${courseName}</td>
+                                <td>${unitValue}</td>
+                                <td>
+                                    <span class="grade-badge grade-${gradeValue}">${gradeValue}</span>
+                                </td>
+                                <td>${coursePoints.toFixed(1)}</td>
+                                <td>
+                                    ${isPassing ?
+                                        '<span class="grade-status-pass">✓ Pass</span>' :
+                                        '<span class="grade-status-fail">✗ Fail</span>'
+                                    }
+                                </td>
+                            </tr>
+                        `;
                     }
+                }
+            } else {
+                // Use form inputs
+                for (let i = 0; i < grades.length; i++) {
+                    const courseName = courseNames[i].value.trim() || `Course ${i + 1}`;
+                    const unitValue = parseFloat(units[i].value);
+                    const gradeValue = grades[i].value;
+                    const points = gradePoints[gradeValue];
 
-                    html += `
-                        <tr>
-                            <td>${courseName}</td>
-                            <td>${unitValue}</td>
-                            <td>
-                                <span class="grade-badge grade-${gradeValue}">${gradeValue}</span>
-                            </td>
-                            <td>${coursePoints.toFixed(1)}</td>
-                            <td>
-                                ${isPassing ?
-                                    '<span class="grade-status-pass">✓ Pass</span>' :
-                                    '<span class="grade-status-fail">✗ Fail</span>'
-                                }
-                            </td>
-                        </tr>
-                    `;
+                    if (!isNaN(unitValue) && unitValue > 0) {
+                        const coursePoints = unitValue * points;
+                        const isPassing = gradeValue !== 'F' && gradeValue !== 'E';
+
+                        totalUnits += unitValue;
+                        totalPoints += coursePoints;
+                        validCourses++;
+
+                        if (isPassing) {
+                            passingCourses++;
+                        } else {
+                            failingCourses++;
+                        }
+                        
+                        html += `
+                            <tr>
+                                <td>${courseName}</td>
+                                <td>${unitValue}</td>
+                                <td>
+                                    <span class="grade-badge grade-${gradeValue}">${gradeValue}</span>
+                                </td>
+                                <td>${coursePoints.toFixed(1)}</td>
+                                <td>
+                                    ${isPassing ?
+                                        '<span class="grade-status-pass">✓ Pass</span>' :
+                                        '<span class="grade-status-fail">✗ Fail</span>'
+                                    }
+                                </td>
+                            </tr>
+                        `;
+                    }
                 }
             }
 
@@ -4421,19 +4490,27 @@
             const totalPoints = document.querySelectorAll('.stat-value')[1]?.textContent || '0';
             const courseCount = document.querySelectorAll('.stat-value')[2]?.textContent || '0';
 
+            // Get session data
+            const sessionCourses = {{ isset($courses) ? json_encode($courses) : '[]' }};
+            const sessionUnits = {{ isset($units) ? json_encode($units) : '[]' }};
+            const sessionGrades = {{ isset($grades) ? json_encode($grades) : '[]' }};
+
             // Get current data from form inputs
             const courseNames = document.querySelectorAll('input[name="courses[]"]');
             const units = document.querySelectorAll('input[name="units[]"]');
             const grades = document.querySelectorAll('select[name="grades[]"]');
+
+            // Determine if we should use session data
+            const useSessionData = sessionCourses.length > 0;
 
             // Generate PDF content
             let gradesTableHTML = '';
             let validCourses = 0;
 
             for (let i = 0; i < grades.length; i++) {
-                const courseName = courseNames[i].value.trim() || `Course ${i + 1}`;
-                const unitValue = parseFloat(units[i].value);
-                const gradeValue = grades[i].value;
+                const courseName = useSessionData && sessionCourses[i] ? sessionCourses[i] : (courseNames[i].value.trim() || `Course ${i + 1}`);
+                const unitValue = useSessionData && sessionUnits[i] ? parseFloat(sessionUnits[i]) : parseFloat(units[i].value);
+                const gradeValue = useSessionData && sessionGrades[i] ? sessionGrades[i] : grades[i].value;
                 const points = gradePoints[gradeValue];
 
                 if (!isNaN(unitValue) && unitValue > 0) {

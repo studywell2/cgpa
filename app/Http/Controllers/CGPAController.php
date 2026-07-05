@@ -53,6 +53,19 @@ class CGPAController extends Controller
         // Determine class classification
         $classification = $this->getClassification($cgpa);
 
+        // Store data in session for persistence
+        session([
+            'cgpa_courses' => $courses,
+            'cgpa_units' => $units,
+            'cgpa_grades' => $grades,
+            'cgpa_value' => round($cgpa, 2),
+            'cgpa_class' => $classification['name'],
+            'cgpa_classClass' => $classification['cssClass'],
+            'cgpa_totalUnits' => $totalUnits,
+            'cgpa_totalPoints' => $totalPoints,
+            'cgpa_courseCount' => $courseCount
+        ]);
+
         return view('cgpa', [
             'cgpa' => round($cgpa, 2),
             'class' => $classification['name'],
