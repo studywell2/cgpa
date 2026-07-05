@@ -3318,7 +3318,6 @@
             const savedCourses = {{ isset($courses) ? json_encode($courses) : '[]' }};
             const savedUnits = {{ isset($units) ? json_encode($units) : '[]' }};
             const savedGrades = {{ isset($grades) ? json_encode($grades) : '[]' }};
-
             if (savedCourses.length > 0) {
                 // Pre-populate courses with saved data
                 for (let i = 0; i < savedCourses.length; i++) {
@@ -3387,7 +3386,7 @@
             const row = btn.closest('.course-row');
             const container = document.getElementById('courses');
 
-            // Don't remove if it's the last row
+            // Don't remove if it is the last row
             if (container.children.length <= 1) {
                 showNotification('You must have at least one course.', 'warning');
                 return;
