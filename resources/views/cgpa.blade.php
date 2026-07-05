@@ -3488,9 +3488,20 @@
         // Form validation
         document.getElementById('cgpaForm').addEventListener('submit', function(e) {
             const units = document.querySelectorAll('input[name="units[]"]');
+            const grades = document.querySelectorAll('select[name="grades[]"]');
             let hasError = false;
+            let hasValidData = false;
 
-            units.forEach(input => {
+            units.forEach((input, index) => {
+                const unitValue = parseFloat(input.value);
+                const gradeValue = grades[index].value;
+
+                // Check if this course has valid data
+                if (!isNaN(unitValue) && unitValue > 0) {
+                    hasValidData = true;
+                }
+
+                // Validate unit range
                 if (input.value && (input.value < 1 || input.value > 6)) {
                     hasError = true;
                     input.style.borderColor = '#ef4444';
@@ -3504,6 +3515,9 @@
             if (hasError) {
                 e.preventDefault();
                 showNotification('Please enter valid credit units (1-6) for all courses.', 'error');
+            } else if (!hasValidData) {
+                e.preventDefault();
+                showNotification('Please enter valid course data first', 'warning');
             } else {
                 // Add loading animation
                 const calculateBtn = document.querySelector('.btn-calculate');
