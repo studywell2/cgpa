@@ -3316,7 +3316,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Check if there's data from previous calculation
             const savedCourses = {{ isset($courses) ? json_encode($courses) : '[]' }};
-            const savedUnits = {{ isset($units) ? json_encode($units) : : '[]' }};
+            const savedUnits = {{ isset($units) ? json_encode($units) : '[]' }};
             const savedGrades = {{ isset($grades) ? json_encode($grades) : '[]' }};
 
             if (savedCourses.length > 0) {
