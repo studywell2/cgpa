@@ -24,6 +24,7 @@ class CGPAController extends Controller
     {
         $units = $request->units;
         $grades = $request->grades;
+        $courses = $request->courses ?? [];
 
         $gradePoints = [
             'A' => 5,
@@ -58,7 +59,10 @@ class CGPAController extends Controller
             'classClass' => $classification['cssClass'],
             'totalUnits' => $totalUnits,
             'totalPoints' => $totalPoints,
-            'courseCount' => $courseCount
+            'courseCount' => $courseCount,
+            'courses' => $courses,
+            'units' => $units,
+            'grades' => $grades
         ]);
     }
 

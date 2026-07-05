@@ -3314,11 +3314,26 @@
 
         // Initialize with 5 empty course rows
         document.addEventListener('DOMContentLoaded', function() {
-            for (let i = 0; i < 5; i++) {
-                addCourse();
+            // Check if there's data from previous calculation
+            const savedCourses = {{ isset($courses) ? json_encode($courses) : '[]' }};
+            const savedUnits = {{ isset($units) ? json_encode($units) : : '[]' }};
+            const savedGrades = {{ isset($grades) ? json_encode($grades) : '[]' }};
+
+            if (savedCourses.length > 0) {
+                // Pre-populate courses with saved data
+                for (let i = 0; i < savedCourses.length; i++) {
+                    addCourse(savedCourses[i], savedUnits[i], savedGrades[i]);
+                }
+            } else {
+                // Initialize with 5 empty course rows
+                for (let i = 0; i < 5; i++) {
+                    addCourse();
+                }
             }
+
             createParticles();
-            initSmoothScroll();
+            init
+SmoothScroll();
             initInputAnimations();
             initThemeToggle();
             initRealtimeCgpa();
@@ -3330,7 +3345,7 @@
             }
         });
 
-        function addCourse() {
+        function addCourse(courseName = '', unitValue = '', gradeValue = 'A') {
             courseCounter++;
             const container = document.getElementById('courses');
 
@@ -3340,15 +3355,15 @@
 
             row.innerHTML = `
                 <span class="course-number">${courseCounter}</span>
-                <input type="text" name="courses[]" class="course-input" placeholder="Course name (e.g., MATH 101)">
-                <input type="number" name="units[]" class="course-input" placeholder="Units" min="1" max="6" required>
+                <input type="text" name="courses[]" class="course-input" placeholder="Course name (e.g., MATH 101)" value="${courseName}">
+                <input type="number" name="units[]" class="course-input" placeholder="Units" min="1" max="6" required value="${unitValue}">
                 <select name="grades[]" class="grade-select" onchange="updateGradeBadge(this)">
-                    <option value="A">A (5.0)</option>
-                    <option value="B">B (4.0)</option>
-                    <option value="C">C (3.0)</option>
-                    <option value="D">D (2.0)</option>
-                    <option value="E">E (1.0)</option>
-                    <option value="F">F (0.0)</option>
+                    <option value="A" ${gradeValue === 'A' ? 'selected' : ''}>A (5.0)</option>
+                    <option value="B" ${gradeValue === 'B' ? 'selected' : ''}>B (4.0)</option>
+                    <option value="C" ${gradeValue === 'C' ? 'selected' : ''}>C (3.0)</option>
+                    <option value="D" ${gradeValue === 'D' ? 'selected' : ''}>D (2.0)</option>
+                    <option value="E" ${gradeValue === 'E' ? 'selected' : ''}>E (1.0)</option>
+                    <option value="F" ${gradeValue === 'F' ? 'selected' : ''}>F (0.0)</option>
                 </select>
                 <button type="button" class="remove-btn" onclick="removeCourse(this)" title="Remove course">×</button>
             `;
@@ -4401,17 +4416,17 @@
                 return;
             }
 
-            // Get current data
-            const courseNames = document.querySelectorAll('input[name="courses[]"]');
-            const units = document.querySelectorAll('input[name="units[]"]');
-            const grades = document.querySelectorAll('select[name="grades[]"]');
-
             // Get CGPA and class from the results section
             const cgpaValue = document.querySelector('.cgpa-value')?.textContent || '0.00';
             const classText = document.querySelector('.cgpa-class')?.textContent || '';
             const totalUnits = document.querySelectorAll('.stat-value')[0]?.textContent || '0';
             const totalPoints = document.querySelectorAll('.stat-value')[1]?.textContent || '0';
             const courseCount = document.querySelectorAll('.stat-value')[2]?.textContent || '0';
+
+            // Get current data from form inputs
+            const courseNames = document.querySelectorAll('input[name="courses[]"]');
+            const units = document.querySelectorAll('input[name="units[]"]');
+            const grades = document.querySelectorAll('select[name="grades[]"]');
 
             // Generate PDF content
             let gradesTableHTML = '';
@@ -4439,7 +4454,22 @@
                 }
             }
 
-            if (validCourses === 0) {
+            // If no valid courses in form, but results exist, show simple results PDF
+            if (validCourses === 0 && parseInt(courseCount) > 0) {
+                showNotification('Generating PDF with calculated results.', 'success');
+                gradesTableHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 30px; background: rgba(20, 184, 166, 0.05);">
+                            <div style="font-size: 16px; color: #64748b; margin-bottom: 10px;">
+                                <strong>📊 CGPA Calculation Results</strong>
+                            </div>
+                            <div style="font-size: 14px; color: #94a3b8;">
+                                This PDF contains your calculated CGPA results. Detailed course breakdown is not available after page reload.
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            } else if (validCourses === 0) {
                 showNotification('No valid courses to include in PDF', 'warning');
                 return;
             }
