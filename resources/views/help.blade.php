@@ -362,6 +362,10 @@
             font-weight: 600;
             font-size: 0.9rem;
             transition: all 0.3s;
+            position: relative;
+            z-index: 1001;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
 
         .faq-question:hover {
@@ -597,10 +601,6 @@
             }
 
             .mobile-menu {
-                display: block;
-            }
-
-            .mobile-menu-overlay {
                 display: block;
             }
 
@@ -1021,7 +1021,8 @@
         function initFaqItems() {
             const faqQuestions = document.querySelectorAll('.faq-question');
             faqQuestions.forEach(question => {
-                question.addEventListener('click', function(e) {
+                // Handle both click and touch events
+                const handleFaqClick = function(e) {
                     e.stopPropagation();
                     e.preventDefault();
 
@@ -1037,7 +1038,10 @@
                     if (!isActive) {
                         faqItem.classList.add('active');
                     }
-                });
+                };
+
+                question.addEventListener('click', handleFaqClick);
+                question.addEventListener('touchend', handleFaqClick);
             });
         }
     </script>
