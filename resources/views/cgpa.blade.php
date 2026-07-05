@@ -219,6 +219,11 @@
             background: rgba(20, 184, 166, 0.1);
         }
 
+        .theme-option:active {
+            background: rgba(20, 184, 166, 0.15);
+            transform: scale(0.98);
+        }
+
         .theme-option.active {
             background: rgba(20, 184, 166, 0.2);
             border: 1px solid rgba(20, 184, 166, 0.3);
@@ -400,6 +405,10 @@
             color: #0f766e;
         }
 
+        body.light-mode .social-icon:active {
+            transform: translateY(-2px) scale(1.05);
+        }
+
         /* Real-time CGPA Preview */
         .cgpa-preview {
             background: linear-gradient(135deg, rgba(20, 184, 166, 0.1), rgba(16, 185, 129, 0.1));
@@ -513,7 +522,28 @@
 
         /* Card hover improvements */
         .calculator-card:hover {
-            border-color: rgba(20, 184, 166, 0.2);
+            border-color: rgba(100, 116, 139, 0.2);
+        }
+
+        /* Touch-friendly improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .course-row:active {
+                background: rgba(51, 65, 85, 0.6);
+                border-color: rgba(20, 184, 166, 0.3);
+            }
+
+            .btn:active {
+                transform: scale(0.98);
+            }
+
+            .social-icon:active {
+                transform: scale(0.95);
+            }
+
+            .theme-btn:active,
+            .theme-picker-btn:active {
+                transform: scale(0.95);
+            }
         }
 
         /* Improved input focus */
@@ -561,11 +591,18 @@
 
         .hamburger.active span:nth-child(2) {
             opacity: 0;
+            transform: scaleX(0);
         }
 
         .hamburger.active span:nth-child(3) {
             transform: rotate(45deg) translate(-5px, -6px);
             background: #14b8a6;
+        }
+
+        /* Improved hamburger touch target */
+        .hamburger {
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
 
         .logo {
@@ -852,6 +889,7 @@
             background-repeat: no-repeat;
             background-position: right 12px center;
             padding-right: 36px;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .grade-select:focus {
@@ -1747,190 +1785,1041 @@
             transform: translateY(-2px) scale(1.05);
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header {
-                padding: 14px 16px;
-            }
-
-            .logo-text {
-                font-size: 1rem;
-            }
-
-            .theme-picker, .theme-toggle {
-                order: 3;
-            }
-
-            .theme-picker-btn, .theme-btn {
-                padding: 6px 10px;
-                font-size: 0.75rem;
-            }
-
-            .header-nav {
-                position: fixed;
-                    top: 100%;
-                    left: 0;
-                    width: 100%;
-                    background: rgba(15, 23, 42, 0.95);
-                    backdrop-filter: blur(20px);
-                    flex-direction: column;
-                    gap: 20px;
-                    padding: 20px;
-                    transform: translateY(-100%);
-                    opacity: 0;
-                    visibility: hidden;
-                    transition: all 0.3s;
-                    border-bottom: 1px solid rgba(20, 184, 166, 0.1);
-                    z-index: 1000;
-                }
-
-            .header-nav.active {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
-            .main-content {
-                padding: 24px 14px;
-            }
-
-            .hero h1 {
-                font-size: 1.6rem;
-            }
-
-            .hero p {
-                font-size: 0.9rem;
-            }
-
-            .calculator-card {
-                padding: 18px;
-                border-radius: 16px;
-            }
-
-            .course-row {
-                grid-template-columns: 28px 1fr 90px 75px 28px;
-                gap: 8px;
-                padding: 12px 8px;
-            }
-
-            .table-header {
-                grid-template-columns: 28px 1fr 90px 75px 28px;
-                font-size: 0.6rem;
-                padding: 0 8px 10px;
-            }
-
-            .course-input, .grade-select {
-                padding: 8px 10px;
-                font-size: 0.75rem;
-            }
-
-            .button-group {
-                flex-direction: column;
-                gap: 8px;
-            }
-
-            .btn {
-                width: 100%;
-                padding: 12px 18px;
-                font-size: 0.8rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-
-            .cgpa-value {
-                font-size: 2.5rem;
-            }
-
-            .grading-info {
-                padding: 16px;
-            }
-
-            .grading-table {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        /* Prevent text selection on interactive elements */
+        .social-icon,
+        .btn,
+        .theme-btn,
+        .theme-picker-btn,
+        .remove-btn {
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
 
-        @media (max-width: 480px) {
+        /* Responsive */
+
+        /* Tablet (768px and below) */
+
+        @media (max-width: 768px) {
+
             .header {
-                flex-direction: column;
-                gap: 12px;
-                text-align: center;
-                padding: 12px 14px;
+
+                padding: 12px 16px;
+
+                flex-wrap: wrap;
+
             }
+
+
+            .logo {
+
+                flex: 1;
+
+                min-width: 200px;
+
+            }
+
+
+            .logo-text {
+
+                font-size: 1.1rem;
+
+            }
+
+
+            .logo-icon {
+
+                width: 36px;
+
+                height: 36px;
+
+                font-size: 18px;
+
+            }
+
 
             .header-nav {
+
+                position: fixed;
+
+                top: 100%;
+
+                left: 0;
+
                 width: 100%;
-                justify-content: center;
-                gap: 10px;
+
+                background: rgba(15, 23, 42, 0.98);
+
+                backdrop-filter: blur(20px);
+
+                flex-direction: column;
+
+                gap: 16px;
+
+                padding: 24px 20px;
+
+                transform: translateY(-100%);
+
+                opacity: 0;
+
+                visibility: hidden;
+
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+                border-bottom: 2px solid rgba(20, 184, 166, 0.2);
+
+                z-index: 1000;
+
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+
             }
+
+
+            body.light-mode .header-nav {
+
+                background: rgba(255, 255, 255, 0.98);
+
+            }
+
+
+            .header-nav.active {
+
+                transform: translateY(0);
+
+                opacity: 1;
+
+                visibility: visible;
+
+            }
+
+
+            .header-nav a {
+
+                font-size: 1rem;
+
+                padding: 12px 16px;
+
+                border-radius: 8px;
+
+                background: rgba(20, 184, 166, 0.05);
+
+            }
+
+
+            .header-nav a:hover {
+
+                background: rgba(20, 184, 166, 0.15);
+
+                transform: translateX(8px);
+
+            }
+
+
+            .theme-picker, .theme-toggle {
+
+                order: 3;
+
+                margin-left: 0;
+
+                margin-right: 0;
+
+            }
+
+
+            .theme-picker-btn, .theme-btn {
+
+                padding: 8px 14px;
+
+                font-size: 0.8rem;
+
+                min-height: 40px;
+
+            }
+
+
+            .theme-picker-dropdown {
+
+                right: 0;
+
+                left: auto;
+
+                min-width: 200px;
+
+            }
+
+
+            .hamburger {
+
+                display: flex;
+
+                order: 2;
+
+            }
+
+
+            .main-content {
+
+                padding: 20px 16px;
+
+                max-width: 100%;
+
+            }
+
 
             .hero h1 {
-                font-size: 1.4rem;
+
+                font-size: 1.8rem;
+
+                line-height: 1.2;
+
             }
+
 
             .hero p {
-                font-size: 0.85rem;
+
+                font-size: 0.95rem;
+
+                line-height: 1.6;
+
             }
+
 
             .calculator-card {
-                padding: 14px;
+
+                padding: 20px;
+
+                border-radius: 16px;
+
             }
+
 
             .card-header {
+
                 flex-direction: column;
-                gap: 8px;
+
+                gap: 12px;
+
                 align-items: flex-start;
+
             }
+
+
+            .card-title {
+
+                font-size: 1rem;
+
+            }
+
+
+            .semester-badge {
+
+                font-size: 0.7rem;
+
+                padding: 5px 14px;
+
+            }
+
 
             .course-row {
-                grid-template-columns: 1fr 1fr;
-                gap: 6px;
-                padding: 10px 8px;
+
+                grid-template-columns: 32px 1fr 100px 85px 32px;
+
+                gap: 8px;
+
+                padding: 12px 10px;
+
             }
 
-            .course-number {
-                grid-column: 1;
-            }
-
-            .course-input[name="courses[]"] {
-                grid-column: 2;
-            }
-
-            .course-input[name="units[]"] {
-                grid-column: 1;
-            }
-
-            .grade-select {
-                grid-column: 2;
-            }
-
-            .remove-btn {
-                grid-column: span 2;
-                justify-self: end;
-            }
 
             .table-header {
-                display: none;
+
+                grid-template-columns: 32px 1fr 100px 85px 32px;
+
+                font-size: 0.65rem;
+
+                padding: 0 10px 12px;
+
             }
 
-            .results-card {
-                padding: 20px 16px;
+
+            .course-input, .grade-select {
+
+                padding: 10px 12px;
+
+                font-size: 0.85rem;
+
             }
+
+
+            .grade-select {
+
+                padding-right: 32px;
+
+                background-size: 10px;
+
+                background-position: right 10px center;
+
+            }
+
+
+            .button-group {
+
+                flex-direction: column;
+
+                gap: 10px;
+
+            }
+
+
+            .btn {
+
+                width: 100%;
+
+                padding: 14px 20px;
+
+                font-size: 0.9rem;
+
+                min-height: 48px;
+
+            }
+
+
+            .stats-grid {
+
+                grid-template-columns: repeat(2, 1fr);
+
+                gap: 12px;
+
+            }
+
+
+            .cgpa-value {
+
+                font-size: 2.8rem;
+
+            }
+
+
+            .cgpa-class {
+
+                font-size: 0.8rem;
+
+                padding: 6px 16px;
+
+            }
+
+
+            .grading-info {
+
+                padding: 18px;
+
+            }
+
 
             .grading-table {
-                grid-template-columns: 1fr;
+
+                grid-template-columns: repeat(2, 1fr);
+
+                gap: 10px;
+
             }
 
-            .footer-links {
-                gap: 10px;
+
+            .charts-container {
+
+                grid-template-columns: 1fr;
+
             }
+
+
+            .target-inputs {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .target-results {
+
+                padding: 16px;
+
+            }
+
+
+            .footer {
+
+                padding: 24px 16px 20px;
+
+            }
+
+
+            .social-media {
+
+                gap: 12px;
+
+            }
+
+
+            .social-icon {
+
+                width: 36px;
+
+                height: 36px;
+
+                font-size: 1rem;
+
+            }
+
+
+            .footer-links {
+
+                gap: 12px;
+
+                flex-wrap: wrap;
+
+            }
+
+
+            .footer-links a {
+
+                font-size: 0.75rem;
+
+                padding: 6px 10px;
+
+            }
+
+        }
+
+
+        /* Mobile (480px and below) */
+
+        @media (max-width: 480px) {
+
+            .header {
+
+                padding: 10px 12px;
+
+                gap: 8px;
+
+            }
+
+
+            .logo {
+
+                min-width: 180px;
+
+            }
+
+
+            .logo-text {
+
+                font-size: 1rem;
+
+            }
+
+
+            .logo-icon {
+
+                width: 32px;
+
+                height: 32px;
+
+                font-size: 16px;
+
+            }
+
+
+            .header-nav {
+
+                padding: 20px 16px;
+
+                gap: 12px;
+
+            }
+
+
+            .header-nav a {
+
+                font-size: 0.95rem;
+
+                padding: 10px 14px;
+
+            }
+
+
+            .theme-picker-btn, .theme-btn {
+
+                padding: 6px 12px;
+
+                font-size: 0.75rem;
+
+                min-height: 36px;
+
+            }
+
+
+            .theme-picker-dropdown {
+
+                min-width: 180px;
+
+            }
+
+
+            .hamburger {
+
+                padding: 6px;
+
+            }
+
+
+            .hamburger span {
+
+                width: 22px;
+
+                height: 2px;
+
+            }
+
+
+            .main-content {
+
+                padding: 16px 12px;
+
+            }
+
+
+            .hero {
+
+                margin-bottom: 24px;
+
+            }
+
+
+            .hero h1 {
+
+                font-size: 1.5rem;
+
+                line-height: 1.3;
+
+            }
+
+
+            .hero p {
+
+                font-size: 0.9rem;
+
+                line-height: 1.5;
+
+            }
+
+
+            .calculator-card {
+
+                padding: 16px 12px;
+
+                border-radius: 12px;
+
+            }
+
+
+            .card-title {
+
+                font-size: 0.95rem;
+
+            }
+
+
+            .card-title-icon {
+
+                width: 28px;
+
+                height: 28px;
+
+                font-size: 0.9rem;
+
+            }
+
+
+            .semester-badge {
+
+                font-size: 0.65rem;
+
+                padding: 4px 12px;
+
+            }
+
+
+            .course-row {
+
+                grid-template-columns: 1fr 1fr;
+
+                gap: 8px;
+
+                padding: 12px 8px;
+
+                background: rgba(51, 65, 85, 0.4);
+
+            }
+
+
+            .course-number {
+
+                grid-column: 1;
+
+                font-size: 0.65rem;
+
+                padding: 3px 6px;
+
+            }
+
+
+            .course-input[name="courses[]"] {
+
+                grid-column: 2;
+
+            }
+
+
+            .course-input[name="units[]"] {
+
+                grid-column: 1;
+
+            }
+
+
+            .grade-select {
+
+                grid-column: 2;
+
+            }
+
+
+            .remove-btn {
+
+                grid-column: span 2;
+
+                justify-self: end;
+
+                font-size: 1.1rem;
+
+                padding: 3px;
+
+            }
+
+
+            .table-header {
+
+                display: none;
+
+            }
+
+
+            .course-input, .grade-select {
+
+                padding: 8px 10px;
+
+                font-size: 0.8rem;
+
+            }
+
+
+            .grade-select {
+
+                padding-right: 28px;
+
+            }
+
+
+            .button-group {
+
+                gap: 8px;
+
+            }
+
+
+            .btn {
+
+                padding: 12px 16px;
+
+                font-size: 0.85rem;
+
+                min-height: 44px;
+
+            }
+
+
+            .results-card {
+
+                padding: 18px 14px;
+
+                border-radius: 14px;
+
+            }
+
+
+            .cgpa-value {
+
+                font-size: 2.2rem;
+
+            }
+
+
+            .cgpa-class {
+
+                font-size: 0.75rem;
+
+                padding: 5px 14px;
+
+            }
+
+
+            .stats-grid {
+
+                grid-template-columns: 1fr;
+
+                gap: 10px;
+
+            }
+
+
+            .stat-item {
+
+                padding: 10px;
+
+            }
+
+
+            .stat-value {
+
+                font-size: 1.2rem;
+
+            }
+
+
+            .grading-info {
+
+                padding: 14px;
+
+                border-radius: 12px;
+
+            }
+
+
+            .grading-info h3 {
+
+                font-size: 0.9rem;
+
+            }
+
+
+            .grading-table {
+
+                grid-template-columns: 1fr;
+
+                gap: 8px;
+
+            }
+
+
+            .grading-item {
+
+                padding: 8px 10px;
+
+            }
+
+
+            .chart-card {
+
+                padding: 16px;
+
+            }
+
+
+            .chart-title {
+
+                font-size: 0.8rem;
+
+            }
+
+
+            .target-calculator {
+
+                padding: 16px 12px;
+
+            }
+
+
+            .target-calculator h3 {
+
+                font-size: 0.95rem;
+
+            }
+
+
+            .target-input {
+
+                padding: 10px 12px;
+
+                font-size: 0.85rem;
+
+            }
+
+
+            .target-results {
+
+                padding: 14px;
+
+            }
+
+
+            .target-result-item {
+
+                padding: 10px 0;
+
+            }
+
+
+            .target-result-label {
+
+                font-size: 0.85rem;
+
+            }
+
+
+            .target-result-value {
+
+                font-size: 1rem;
+
+            }
+
+
+            .footer {
+
+                padding: 20px 12px 16px;
+
+            }
+
+
+            .social-media {
+
+                gap: 10px;
+
+                margin-bottom: 14px;
+
+            }
+
+
+            .social-icon {
+
+                width: 34px;
+
+                height: 34px;
+
+                font-size: 0.95rem;
+
+            }
+
+
+            .footer-links {
+
+                gap: 8px;
+
+                margin-bottom: 10px;
+
+            }
+
+
+            .footer-links a {
+
+                font-size: 0.7rem;
+
+                padding: 5px 8px;
+
+            }
+
+
+            .footer-copyright {
+
+                font-size: 0.7rem;
+
+                margin-bottom: 6px;
+
+            }
+
+
+            .footer-credit {
+
+                font-size: 0.65rem;
+
+            }
+
+
+            .grades-view-section {
+
+                padding: 16px 12px;
+
+            }
+
+
+            .grades-view-header h3 {
+
+                font-size: 0.95rem;
+
+            }
+
+
+            .grades-table-container {
+
+                padding: 16px;
+
+            }
+
+
+            .grades-table th {
+
+                padding: 10px 8px;
+
+                font-size: 0.7rem;
+
+            }
+
+
+            .grades-table td {
+
+                padding: 10px 8px;
+
+                font-size: 0.8rem;
+
+            }
+
+
+            .grade-badge {
+
+                padding: 3px 8px;
+
+                font-size: 0.7rem;
+
+            }
+
+
+            .summary-item {
+
+                padding: 10px;
+
+            }
+
+
+            .summary-value {
+
+                font-size: 1.1rem;
+
+            }
+
+        }
+
+
+        /* Extra Small Mobile (360px and below) */
+
+        @media (max-width: 360px) {
+
+            .header {
+
+                padding: 8px 10px;
+
+            }
+
+
+            .logo-text {
+
+                font-size: 0.9rem;
+
+            }
+
+
+            .logo-icon {
+
+                width: 28px;
+
+                height: 28px;
+
+                font-size: 14px;
+
+            }
+
+
+            .hero h1 {
+
+                font-size: 1.3rem;
+
+            }
+
+
+            .hero p {
+
+                font-size: 0.85rem;
+
+            }
+
+
+            .calculator-card {
+
+                padding: 12px 10px;
+
+            }
+
+
+            .course-row {
+
+                padding: 10px 6px;
+
+                gap: 6px;
+
+            }
+
+
+            .course-input, .grade-select {
+
+                padding: 7px 8px;
+
+                font-size: 0.75rem;
+
+            }
+
+
+            .btn {
+
+                padding: 10px 14px;
+
+                font-size: 0.8rem;
+
+                min-height: 40px;
+
+            }
+
+
+            .cgpa-value {
+
+                font-size: 1.8rem;
+
+            }
+
+
+            .stat-value {
+
+                font-size: 1.1rem;
+
+            }
+
+
+            .social-icon {
+
+                width: 32px;
+
+                height: 32px;
+
+                font-size: 0.9rem;
+
+            }
+
         }
 
         /* PDF Button Styling */
@@ -2433,6 +3322,12 @@
             initInputAnimations();
             initThemeToggle();
             initRealtimeCgpa();
+
+            // Check if there are results from previous calculation and show analytics
+            const resultsSection = document.querySelector('.results-section.show');
+            if (resultsSection) {
+                showAnalytics();
+            }
         });
 
         function addCourse() {
@@ -2553,8 +3448,15 @@
         document.getElementById('hamburger').addEventListener('click', function() {
             const nav = document.getElementById('headerNav');
             const hamburger = document.getElementById('hamburger');
-            nav.classList.toggle('active');
+            const isActive = nav.classList.toggle('active');
             hamburger.classList.toggle('active');
+
+            // Prevent body scroll when mobile menu is open
+            if (isActive) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
         });
 
         // Close menu when clicking on a link
@@ -2565,6 +3467,22 @@
                 nav.classList.remove('active');
                 hamburger.classList.remove('active');
             });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const nav = document.getElementById('headerNav');
+            const hamburger = document.getElementById('hamburger');
+
+            if (nav.classList.contains('active')) {
+                const isClickInsideNav = nav.contains(event.target);
+                const isClickOnHamburger = hamburger.contains(event.target);
+
+                if (!isClickInsideNav && !isClickOnHamburger) {
+                    nav.classList.remove('active');
+                    hamburger.classList.remove('active');
+                }
+            }
         });
 
         // Form validation
@@ -2949,6 +3867,22 @@
         }
 
         function showGradesView() {
+            // Check if there are valid courses
+            const units = document.querySelectorAll('input[name="units[]"]');
+            let hasValidData = false;
+
+            units.forEach(input => {
+                const unitValue = parseFloat(input.value);
+                if (!isNaN(unitValue) && unitValue > 0) {
+                    hasValidData = true;
+                }
+            });
+
+            if (!hasValidData) {
+                showNotification('Please enter valid course data first', 'warning');
+                return;
+            }
+
             updateGradesView();
             document.getElementById('gradesViewSection').classList.add('show');
         }
@@ -3052,6 +3986,22 @@
         }
 
         function showAnalytics() {
+            // Check if there are valid courses
+            const units = document.querySelectorAll('input[name="units[]"]');
+            let hasValidData = false;
+
+            units.forEach(input => {
+                const unitValue = parseFloat(input.value);
+                if (!isNaN(unitValue) && unitValue > 0) {
+                    hasValidData = true;
+                }
+            });
+
+            if (!hasValidData) {
+                showNotification('Please enter valid course data first', 'warning');
+                return;
+            }
+
             updateAnalytics();
             document.getElementById('analyticsSection').classList.add('show');
         }
@@ -3246,17 +4196,16 @@
             updateAnalytics();
         };
 
-        // Initialize analytics on page load if there are results
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check if there are results from previous calculation
-            const resultsSection = document.querySelector('.results-section.show');
-            if (resultsSection) {
-                showAnalytics();
-            }
-        });
+        // Initialize analytics on page load if there are results (handled in main DOMContentLoaded)
 
         // PDF Download Function
         function downloadGradesPDF() {
+            // Check if html2pdf is available
+            if (typeof html2pdf === 'undefined') {
+                showNotification('PDF library not loaded. Please refresh the page.', 'error');
+                return;
+            }
+
             // Get current data
             const courseNames = document.querySelectorAll('input[name="courses[]"]');
             const units = document.querySelectorAll('input[name="units[]"]');
@@ -3393,25 +4342,34 @@
             // Show loading notification
             showNotification('Generating detailed grades PDF...', 'info');
 
-            // Create a temporary container for PDF content
-            const tempContainer = document.createElement('div');
-            tempContainer.style.position = 'absolute';
-            tempContainer.style.left = '-9999px';
-            tempContainer.style.top = '0';
-            tempContainer.innerHTML = pdfHTML;
-            document.body.appendChild(tempContainer);
+            try {
+                // Create a temporary container for PDF content
+                const tempContainer = document.createElement('div');
+                tempContainer.style.position = 'absolute';
+                tempContainer.style.left = '-9999px';
+                tempContainer.style.top = '0';
+                tempContainer.innerHTML = pdfHTML;
+                document.body.appendChild(tempContainer);
 
-            // Generate and download PDF
-            html2pdf().set(opt).from(tempContainer).save().then(() => {
-                // Clean up
-                document.body.removeChild(tempContainer);
-                showNotification('Detailed grades PDF downloaded successfully!', 'success');
-            }).catch((error) => {
-                // Clean up on error
-                document.body.removeChild(tempContainer);
-                console.error('PDF generation error:', error);
-                showNotification('Error generating PDF. Please try again.', 'error');
-            });
+                // Generate and download PDF
+                html2pdf().set(opt).from(tempContainer).save().then(() => {
+                    // Clean up
+                    if (document.body.contains(tempContainer)) {
+                        document.body.removeChild(tempContainer);
+                    }
+                    showNotification('Detailed grades PDF downloaded successfully!', 'success');
+                }).catch((error) => {
+                    // Clean up on error
+                    if (document.body.contains(tempContainer)) {
+                        document.body.removeChild(tempContainer);
+                    }
+                    console.error('PDF generation error:', error);
+                    showNotification('Error generating PDF. Please try again.', 'error');
+                });
+            } catch (error) {
+                console.error('PDF setup error:', error);
+                showNotification('Error setting up PDF generation. Please try again.', 'error');
+            }
         }
 
         // PDF Download Function
@@ -3420,6 +4378,12 @@
             const resultsSection = document.querySelector('.results-section');
             if (!resultsSection || !resultsSection.classList.contains('show')) {
                 showNotification('Please calculate your CGPA first before downloading PDF', 'warning');
+                return;
+            }
+
+            // Check if html2pdf is available
+            if (typeof html2pdf === 'undefined') {
+                showNotification('PDF library not loaded. Please refresh the page.', 'error');
                 return;
             }
 
@@ -3531,25 +4495,34 @@
             // Show loading notification
             showNotification('Generating PDF...', 'info');
 
-            // Create a temporary container for PDF content
-            const tempContainer = document.createElement('div');
-            tempContainer.style.position = 'absolute';
-            tempContainer.style.left = '-9999px';
-            tempContainer.style.top = '0';
-            tempContainer.innerHTML = pdfHTML;
-            document.body.appendChild(tempContainer);
+            try {
+                // Create a temporary container for PDF content
+                const tempContainer = document.createElement('div');
+                tempContainer.style.position = 'absolute';
+                tempContainer.style.left = '-9999px';
+                tempContainer.style.top = '0';
+                tempContainer.innerHTML = pdfHTML;
+                document.body.appendChild(tempContainer);
 
-            // Generate and download PDF
-            html2pdf().set(opt).from(tempContainer).save().then(() => {
-                // Clean up
-                document.body.removeChild(tempContainer);
-                showNotification('PDF downloaded successfully!', 'success');
-            }).catch((error) => {
-                // Clean up on error
-                document.body.removeChild(tempContainer);
-                console.error('PDF generation error:', error);
-                showNotification('Error generating PDF. Please try again.', 'error');
-            });
+                // Generate and download PDF
+                html2pdf().set(opt).from(tempContainer).save().then(() => {
+                    // Clean up
+                    if (document.body.contains(tempContainer)) {
+                        document.body.removeChild(tempContainer);
+                    }
+                    showNotification('PDF downloaded successfully!', 'success');
+                }).catch((error) => {
+                    // Clean up on error
+                    if (document.body.contains(tempContainer)) {
+                        document.body.removeChild(tempContainer);
+                    }
+                    console.error('PDF generation error:', error);
+                    showNotification('Error generating PDF. Please try again.', 'error');
+                });
+            } catch (error) {
+                console.error('PDF setup error:', error);
+                showNotification('Error setting up PDF generation. Please try again.', 'error');
+            }
         }
     </script>
 </body>
