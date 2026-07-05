@@ -3332,8 +3332,7 @@
             }
 
             createParticles();
-            init
-SmoothScroll();
+            initSmoothScroll();
             initInputAnimations();
             initThemeToggle();
             initRealtimeCgpa();
