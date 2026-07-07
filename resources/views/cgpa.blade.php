@@ -3219,9 +3219,9 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="social-media">
-            <a href="https://wa.me/2348073866899" target="_blank" class="social-icon" title="WhatsApp"></a>
-            <a href="https://www.linkedin.com/in/studywell" target="_blank" class="social-icon" title="LinkedIn"></a>
-            <a href="https://x.com/WETech33" target="_blank" class="social-icon" title="X (Twitter)"></a>
+            <a href="https://wa.me/2348073866899" target="_blank" class="social-icon" title="WhatsApp">💬</a>
+<a href="https://www.linkedin.com/in/studywell" target="_blank" class="social-icon" title="LinkedIn">💼</a>
+<a href="https://x.com/WETech33" target="_blank" class="social-icon" title="X (Twitter)">🐦</a>
         </div>
         <div class="footer-links">
             <a href="#">Privacy Policy</a>
