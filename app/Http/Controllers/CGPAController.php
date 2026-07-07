@@ -79,6 +79,60 @@ class CGPAController extends Controller
         ]);
     }
 
+    public function grades()
+    {
+        if (!session()->has('cgpa_value')) {
+            return redirect('/')->with('message', 'Please calculate your CGPA first.');
+        }
+
+        return view('grades', [
+            'courses' => session('cgpa_courses', []),
+            'units' => session('cgpa_units', []),
+            'grades' => session('cgpa_grades', []),
+            'cgpa' => session('cgpa_value'),
+            'class' => session('cgpa_class'),
+            'totalUnits' => session('cgpa_totalUnits'),
+            'totalPoints' => session('cgpa_totalPoints'),
+            'courseCount' => session('cgpa_courseCount'),
+        ]);
+    }
+
+    public function analytics()
+    {
+        if (!session()->has('cgpa_value')) {
+            return redirect('/')->with('message', 'Please calculate your CGPA first.');
+        }
+
+        return view('analytics', [
+            'courses' => session('cgpa_courses', []),
+            'units' => session('cgpa_units', []),
+            'grades' => session('cgpa_grades', []),
+            'cgpa' => session('cgpa_value'),
+            'class' => session('cgpa_class'),
+            'totalUnits' => session('cgpa_totalUnits'),
+            'totalPoints' => session('cgpa_totalPoints'),
+            'courseCount' => session('cgpa_courseCount'),
+        ]);
+    }
+
+    public function pdf()
+    {
+        if (!session()->has('cgpa_value')) {
+            return redirect('/')->with('message', 'Please calculate your CGPA first.');
+        }
+
+        return view('pdf', [
+            'courses' => session('cgpa_courses', []),
+            'units' => session('cgpa_units', []),
+            'grades' => session('cgpa_grades', []),
+            'cgpa' => session('cgpa_value'),
+            'class' => session('cgpa_class'),
+            'totalUnits' => session('cgpa_totalUnits'),
+            'totalPoints' => session('cgpa_totalPoints'),
+            'courseCount' => session('cgpa_courseCount'),
+        ]);
+    }
+
     private function getClassification($cgpa)
     {
         if ($cgpa >= 4.50) {
